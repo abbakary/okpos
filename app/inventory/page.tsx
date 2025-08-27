@@ -21,7 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Search, Package, AlertTriangle, TrendingUp, Edit, Trash2 } from "lucide-react"
+import { Plus, Search, Package, AlertTriangle, TrendingUp, Edit, Trash2, XCircle, Shield } from "lucide-react"
 
 // Mock data for inventory items
 const mockInventoryItems = [
