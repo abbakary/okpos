@@ -154,7 +154,7 @@ export function DashboardHeader() {
               <span>Switch to {isAdmin ? "Manager" : "Admin"} (Demo)</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
               <span>Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
