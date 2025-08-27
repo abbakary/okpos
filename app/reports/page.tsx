@@ -1,28 +1,32 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense, lazy } from "react"
+import { AuthWrapper } from "@/components/auth-wrapper"
+import { DashboardSidebar } from "@/components/dashboard-sidebar"
+import { DashboardHeader } from "@/components/dashboard-header"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  PieChart,
-  Pie,
-  Cell,
-  AreaChart,
-  Area,
-} from "recharts"
+import { Skeleton } from "@/components/ui/skeleton"
 import { TrendingUp, TrendingDown, Users, Car, DollarSign, Clock, Download, Calendar } from "lucide-react"
+
+// Lazy load heavy chart components
+const BarChart = lazy(() => import("recharts").then(m => ({ default: m.BarChart })))
+const Bar = lazy(() => import("recharts").then(m => ({ default: m.Bar })))
+const XAxis = lazy(() => import("recharts").then(m => ({ default: m.XAxis })))
+const YAxis = lazy(() => import("recharts").then(m => ({ default: m.YAxis })))
+const CartesianGrid = lazy(() => import("recharts").then(m => ({ default: m.CartesianGrid })))
+const Tooltip = lazy(() => import("recharts").then(m => ({ default: m.Tooltip })))
+const ResponsiveContainer = lazy(() => import("recharts").then(m => ({ default: m.ResponsiveContainer })))
+const LineChart = lazy(() => import("recharts").then(m => ({ default: m.LineChart })))
+const Line = lazy(() => import("recharts").then(m => ({ default: m.Line })))
+const PieChart = lazy(() => import("recharts").then(m => ({ default: m.PieChart })))
+const Pie = lazy(() => import("recharts").then(m => ({ default: m.Pie })))
+const Cell = lazy(() => import("recharts").then(m => ({ default: m.Cell })))
+const AreaChart = lazy(() => import("recharts").then(m => ({ default: m.AreaChart })))
+const Area = lazy(() => import("recharts").then(m => ({ default: m.Area })))
 
 export default function ReportsPage() {
   const [dateRange, setDateRange] = useState("30")
