@@ -77,7 +77,13 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <AuthWrapper>
+      <div className="flex h-screen bg-background">
+        <DashboardSidebar />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <DashboardHeader />
+          <main className="flex-1 overflow-y-auto p-6">
+            <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -544,7 +550,11 @@ export default function ReportsPage() {
             </CardContent>
           </Card>
         </TabsContent>
-      </Tabs>
-    </div>
+            </Tabs>
+            </div>
+          </main>
+        </div>
+      </div>
+    </AuthWrapper>
   )
 }
