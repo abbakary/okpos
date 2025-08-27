@@ -447,6 +447,15 @@ export function CustomerDetails({ customer, onClose, userRole = "user" }: Custom
           </TabsContent>
         </Tabs>
       </DialogContent>
+
+      {/* Customer Attachments Modal */}
+      {showAttachments && (
+        <CustomerAttachments
+          customerId={customer.id}
+          customerName={customer.name}
+          onClose={() => setShowAttachments(false)}
+        />
+      )}
     </Dialog>
   )
 }
