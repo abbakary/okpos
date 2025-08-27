@@ -15,21 +15,27 @@ const UserContext = createContext<UserContextType | undefined>(undefined)
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
 
-  // Mock initial user - in real app this would come from authentication
+  // Check for existing session on mount
   useEffect(() => {
-    // For demo purposes, we'll set a default admin user
-    const mockUser: User = {
-      id: 1,
-      username: "admin",
-      email: "admin@autocare.co.tz",
-      full_name: "Admin User",
-      user_type: "admin",
-      is_active: true,
-      created_at: "2024-01-01T00:00:00Z",
-      updated_at: "2024-01-01T00:00:00Z",
+    // In a real app, you'd check localStorage, cookies, or make an API call to verify session
+    const savedUser = localStorage.getItem("autocare_user")
+    if (savedUser) {
+      try {
+        setCurrentUser(JSON.parse(savedUser))
+      } catch (error) {
+        localStorage.removeItem("autocare_user")
+      }
     }
-    setCurrentUser(mockUser)
   }, [])
+
+  // Save user to localStorage when it changes
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("autocare_user", JSON.stringify(currentUser))
+    } else {
+      localStorage.removeItem("autocare_user")
+    }
+  }, [currentUser])
 
   const isAdmin = currentUser?.user_type === "admin"
   const isManager = currentUser?.user_type === "office_manager"
