@@ -234,14 +234,15 @@ export default function CustomersPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[20%]">Customer</TableHead>
+                        <TableHead className="w-[18%]">Customer</TableHead>
+                        <TableHead className="w-[12%] hidden md:table-cell">Vehicle Image</TableHead>
                         <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
-                        <TableHead className="w-[25%]">Contact</TableHead>
+                        <TableHead className="w-[20%]">Contact</TableHead>
                         <TableHead className="w-[8%] hidden lg:table-cell">Vehicles</TableHead>
                         <TableHead className="w-[8%] hidden lg:table-cell">Visits</TableHead>
-                        <TableHead className="w-[15%] hidden md:table-cell">Total Spent</TableHead>
-                        <TableHead className="w-[10%] hidden md:table-cell">Last Visit</TableHead>
-                        <TableHead className="w-[14%]">Actions</TableHead>
+                        <TableHead className="w-[12%] hidden md:table-cell">Total Spent</TableHead>
+                        <TableHead className="w-[8%] hidden md:table-cell">Last Visit</TableHead>
+                        <TableHead className="w-[12%]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
