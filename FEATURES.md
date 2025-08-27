@@ -33,14 +33,15 @@ When an order status is updated to "completed", the system now automatically gen
 
 ---
 
-### 2. **Customer Attachment Management** 👨‍💼
+### 2. **Customer Attachment Management in Order Processing** 👨‍💼
 
-A comprehensive file upload and management system for customer documents.
+A comprehensive file upload and management system for customer documents, integrated directly into the order management workflow.
 
-#### **Access Control**
+#### **Location & Access**
+- **Order Management Integration**: Available when managers update orders
 - **Manager/Admin Only**: Only users with manager or admin roles can access
 - **Permission Display**: Shield icon indicates manager-required features
-- **Role-based UI**: Different interfaces for different user roles
+- **Contextual Access**: Upload documents for the specific customer while processing their order
 
 #### **Upload Features**
 - **Multiple File Upload**: Support for multiple files simultaneously
