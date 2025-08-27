@@ -74,7 +74,7 @@ export default function CustomersPage() {
   const [showCustomerDetails, setShowCustomerDetails] = useState(false)
   const [customers, setCustomers] = useState(mockCustomers)
 
-  const filteredCustomers = mockCustomers.filter((customer) => {
+  const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
       customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.customer_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -86,6 +86,50 @@ export default function CustomersPage() {
   const handleViewCustomer = (customer: any) => {
     setSelectedCustomer(customer)
     setShowCustomerDetails(true)
+  }
+
+  const handleSaveCustomer = (formData: any) => {
+    try {
+      console.log("Received customer data:", formData)
+
+      // Extract customer data from the form submission
+      const newCustomer = {
+        id: formData.customer.id || Date.now(),
+        customer_code: formData.customer.customer_code || `CUST${String(Date.now()).slice(-6)}`,
+        name: formData.customer.name,
+        customer_type: formData.customer.customer_type || "personal",
+        phone: formData.customer.phone,
+        email: formData.customer.email || "",
+        address: formData.customer.address || "",
+        notes: formData.customer.notes || "",
+        total_visits: formData.customer.total_visits || 0,
+        total_spent: formData.customer.total_spent || 0,
+        last_visit: formData.customer.last_visit || new Date().toISOString().split('T')[0],
+        vehicles: formData.customer.vehicles || [],
+        is_active: true,
+        registration_date: formData.customer.registration_date || new Date().toISOString().split('T')[0],
+        business_info: formData.customer.business_info || null,
+      }
+
+      // Add to customers list
+      setCustomers(prev => [newCustomer, ...prev])
+
+      // Close the form
+      setShowCustomerForm(false)
+
+      // Show success message
+      alert(`Customer "${newCustomer.name}" has been successfully registered!`)
+
+      // If there's also an order, log it
+      if (formData.order) {
+        console.log("Order created:", formData.order)
+        // Here you would typically also save the order to orders state/database
+      }
+
+    } catch (error) {
+      console.error("Error saving customer:", error)
+      alert("Failed to save customer. Please try again.")
+    }
   }
 
   return (
