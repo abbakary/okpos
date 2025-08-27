@@ -308,10 +308,7 @@ export default function CustomersPage() {
       {showCustomerForm && (
         <CustomerForm
           onClose={() => setShowCustomerForm(false)}
-          onSave={(customer) => {
-            console.log("Saving customer:", customer)
-            setShowCustomerForm(false)
-          }}
+          onSave={handleSaveCustomer}
         />
       )}
 
