@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { RefreshCw, Calendar, TrendingUp, Users, Clock, DollarSign } from "lucide-react"
+import { RefreshCw, Calendar, TrendingUp, Users, Clock, DollarSign, Wrench } from "lucide-react"
 import { Badge } from "./ui/badge"
 
 export function DashboardReports() {
