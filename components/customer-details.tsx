@@ -12,7 +12,6 @@ import { Phone, Mail, MapPin, Car, Calendar, DollarSign, FileText, Edit } from "
 interface CustomerDetailsProps {
   customer: any
   onClose: () => void
-  userRole?: "admin" | "manager" | "user" // Add user role for permissions
 }
 
 // Mock service history data
@@ -81,12 +80,8 @@ const statusColors = {
   overdue: "bg-red-100 text-red-800",
 }
 
-export function CustomerDetails({ customer, onClose, userRole = "user" }: CustomerDetailsProps) {
+export function CustomerDetails({ customer, onClose }: CustomerDetailsProps) {
   const [activeTab, setActiveTab] = useState("overview")
-  const [showAttachments, setShowAttachments] = useState(false)
-
-  // Check if user has manager permissions for attachments
-  const canManageAttachments = userRole === "admin" || userRole === "manager"
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
@@ -110,17 +105,11 @@ export function CustomerDetails({ customer, onClose, userRole = "user" }: Custom
         </DialogHeader>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="vehicles">Vehicles</TabsTrigger>
             <TabsTrigger value="history">Service History</TabsTrigger>
             <TabsTrigger value="invoices">Invoices</TabsTrigger>
-            <TabsTrigger value="attachments" className="relative">
-              Attachments
-              {canManageAttachments && (
-                <Shield className="h-3 w-3 ml-1 text-primary" title="Manager Access" />
-              )}
-            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
