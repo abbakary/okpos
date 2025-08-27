@@ -19,7 +19,8 @@ export interface Customer {
   phone: string
   email?: string
   address?: string
-  is_owner?: boolean // For personal customers
+  is_owner?: boolean // For personal customers - true if owner, false if driver
+  personal_sub_type?: "owner" | "driver" // Sub-type for personal customers
   business_name?: string // For business customers
   tax_number?: string
   registration_date: string
