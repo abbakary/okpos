@@ -494,7 +494,7 @@ export default function InvoicesPage() {
                                       <Download className="h-4 w-4" />
                                     </Button>
                                     <Button variant="ghost" size="sm">
-                                      <Print className="h-4 w-4" />
+                                      <Printer className="h-4 w-4" />
                                     </Button>
                                     {invoice.status === "draft" && (
                                       <Button 
