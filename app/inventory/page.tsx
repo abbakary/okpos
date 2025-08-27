@@ -1,6 +1,10 @@
 "use client"
 
 import { useState } from "react"
+import { AuthWrapper } from "@/components/auth-wrapper"
+import { DashboardSidebar } from "@/components/dashboard-sidebar"
+import { DashboardHeader } from "@/components/dashboard-header"
+import { useUser } from "@/lib/user-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
