@@ -130,7 +130,19 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="order_details">Order Details</TabsTrigger>
+            <TabsTrigger value="attachments" className="relative">
+              Customer Attachments
+              {canManageAttachments && (
+                <Shield className="h-3 w-3 ml-1 text-primary" title="Manager Access" />
+              )}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="order_details" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Left Column - Order Details */}
           <div className="space-y-6">
             {/* Order Info */}
@@ -464,7 +476,112 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
               </CardContent>
             </Card>
           </div>
-        </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="attachments" className="space-y-4">
+            {canManageAttachments ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Upload className="h-5 w-5" />
+                    Customer Documents & Attachments
+                    <Badge variant="secondary" className="ml-auto">
+                      Manager Access
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <p className="text-sm text-muted-foreground">
+                      As a manager updating this order, you can upload and manage documents for <strong>{order.customer_id ? `Customer ID: ${order.customer_id}` : 'this customer'}</strong> including:
+                      ID documents, vehicle papers, service records, photos, invoices, and more.
+                    </p>
+
+                    <Button
+                      onClick={() => setShowAttachments(true)}
+                      className="w-full sm:w-auto"
+                    >
+                      <Upload className="h-4 w-4 mr-2" />
+                      Manage Customer Attachments
+                    </Button>
+
+                    {/* Quick stats for existing attachments */}
+                    <div className="grid gap-4 md:grid-cols-3 mt-6">
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-2xl font-bold text-primary">8</div>
+                          <p className="text-sm text-muted-foreground">Total Files</p>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-2xl font-bold text-green-600">5.2 MB</div>
+                          <p className="text-sm text-muted-foreground">Total Size</p>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="p-4">
+                          <div className="text-2xl font-bold text-blue-600">4</div>
+                          <p className="text-sm text-muted-foreground">Categories</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+
+                    {/* Recent attachments preview */}
+                    <div className="mt-6">
+                      <h4 className="font-medium mb-3">Recent Attachments for this Customer</h4>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between p-2 bg-muted rounded">
+                          <div className="flex items-center gap-2">
+                            <FileText className="h-4 w-4" />
+                            <span className="text-sm">vehicle_registration.pdf</span>
+                            <Badge variant="outline" className="text-xs">Vehicle Documents</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">3 days ago</span>
+                        </div>
+                        <div className="flex items-center justify-between p-2 bg-muted rounded">
+                          <div className="flex items-center gap-2">
+                            <FileText className="h-4 w-4" />
+                            <span className="text-sm">service_history_2024.pdf</span>
+                            <Badge variant="outline" className="text-xs">Service Records</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">1 week ago</span>
+                        </div>
+                        <div className="flex items-center justify-between p-2 bg-muted rounded">
+                          <div className="flex items-center gap-2">
+                            <FileText className="h-4 w-4" />
+                            <span className="text-sm">insurance_certificate.jpg</span>
+                            <Badge variant="outline" className="text-xs">Insurance</Badge>
+                          </div>
+                          <span className="text-xs text-muted-foreground">2 weeks ago</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                      <h4 className="font-medium text-blue-900 mb-2">💡 Manager Tip</h4>
+                      <p className="text-sm text-blue-800">
+                        Upload customer documents here while processing their order. All files will be associated with this customer and accessible across all their future orders and service history.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardContent className="p-8 text-center">
+                  <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <h3 className="font-medium mb-2">Manager Access Required</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Only managers and administrators can upload and manage customer attachments during order processing.
+                    Please contact your supervisor if you need access to this feature.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+        </Tabs>
 
         <DialogFooter className="flex justify-between">
           <Button variant="outline" onClick={onClose}>
