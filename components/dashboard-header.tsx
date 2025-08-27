@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import { Search, Bell, User } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -13,15 +14,94 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useUser, createDemoUser } from "@/lib/user-context"
+
+// Define page-specific content
+const getPageContent = (pathname: string, userName: string, userType: string) => {
+  const isAdmin = userType === "admin"
+  const baseGreeting = isAdmin ? "Admin" : "Manager"
+
+  switch (pathname) {
+    case "/":
+      return {
+        title: `Welcome ${baseGreeting}`,
+        subtitle: "Track your business operations and customer services today.",
+        searchPlaceholder: "Search customers, job cards..."
+      }
+    case "/customers":
+      return {
+        title: "Customer Management",
+        subtitle: isAdmin ? "Manage all customer records and view complete customer history." : "View and update customer information for your assigned areas.",
+        searchPlaceholder: "Search customers, phone numbers..."
+      }
+    case "/orders":
+      return {
+        title: "Orders & Services",
+        subtitle: "Manage service orders and track their progress through completion.",
+        searchPlaceholder: "Search orders, service types..."
+      }
+    case "/job-cards":
+      return {
+        title: "Job Cards & Tracking",
+        subtitle: "Monitor active job cards and track technician progress.",
+        searchPlaceholder: "Search job cards, vehicles..."
+      }
+    case "/time-tracking":
+      return {
+        title: "Time Tracking",
+        subtitle: "Track technician work hours and service completion times.",
+        searchPlaceholder: "Search technicians, activities..."
+      }
+    case "/invoices":
+      return {
+        title: "Invoices & Payments",
+        subtitle: "Generate invoices and manage customer payment records.",
+        searchPlaceholder: "Search invoices, customers..."
+      }
+    case "/inventory":
+      return {
+        title: "Inventory Management",
+        subtitle: isAdmin ? "Full inventory control and stock management across all locations." : "Access restricted - Admin only feature.",
+        searchPlaceholder: "Search parts, categories..."
+      }
+    case "/reports":
+      return {
+        title: "Analytics & Reports",
+        subtitle: isAdmin ? "Comprehensive business analytics and financial reports." : "View operational reports and performance metrics.",
+        searchPlaceholder: "Search reports, metrics..."
+      }
+    default:
+      return {
+        title: `Welcome ${baseGreeting}`,
+        subtitle: "AutoCare Management System",
+        searchPlaceholder: "Search..."
+      }
+  }
+}
 
 export function DashboardHeader() {
+  const pathname = usePathname()
+  const { currentUser, setCurrentUser, isAdmin } = useUser()
+
+  const pageContent = getPageContent(
+    pathname,
+    currentUser?.full_name || "User",
+    currentUser?.user_type || "office_manager"
+  )
+
+  const handleSwitchUser = () => {
+    // Demo function to switch between admin and manager
+    const newUserType = isAdmin ? "office_manager" : "admin"
+    setCurrentUser(createDemoUser(newUserType))
+  }
+
   return (
     <header className="flex h-16 items-center justify-between border-b border-border bg-background px-6">
       {/* Welcome Message */}
       <div className="flex items-center gap-4">
         <div>
-          <h1 className="text-xl font-semibold text-foreground">Welcome Admin</h1>
-          <p className="text-sm text-muted-foreground">Track your business operations and customer services today.</p>
+          <h1 className="text-xl font-semibold text-foreground">{pageContent.title}</h1>
+          <p className="text-sm text-muted-foreground">{pageContent.subtitle}</p>
         </div>
       </div>
 
@@ -30,7 +110,7 @@ export function DashboardHeader() {
         {/* Search */}
         <div className="relative w-80">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Search customers, job cards..." className="pl-10 bg-background" />
+          <Input placeholder={pageContent.searchPlaceholder} className="pl-10 bg-background" />
         </div>
 
         {/* Notifications */}
@@ -44,16 +124,21 @@ export function DashboardHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar className="h-8 w-8">
-                <AvatarImage src="/admin-avatar.png" alt="Admin" />
-                <AvatarFallback>AD</AvatarFallback>
+                <AvatarImage src={`/${currentUser?.user_type}-avatar.png`} alt={currentUser?.full_name} />
+                <AvatarFallback>
+                  {currentUser?.full_name?.split(" ").map(n => n[0]).join("").toUpperCase() || "U"}
+                </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">Admin User</p>
-                <p className="text-xs leading-none text-muted-foreground">admin@autocare.co.tz</p>
+                <p className="text-sm font-medium leading-none">{currentUser?.full_name}</p>
+                <p className="text-xs leading-none text-muted-foreground">{currentUser?.email}</p>
+                <Badge variant="outline" className="w-fit mt-1 text-xs">
+                  {currentUser?.user_type === "admin" ? "Admin" : "Manager"}
+                </Badge>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -63,6 +148,10 @@ export function DashboardHeader() {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <span>Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSwitchUser} className="text-blue-600">
+              <span>Switch to {isAdmin ? "Manager" : "Admin"} (Demo)</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
