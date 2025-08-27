@@ -136,13 +136,21 @@ export function DashboardSidebar({ className }: SidebarProps) {
               <Button
                 variant="ghost"
                 className={cn(
-                  "w-full justify-start gap-3 h-12 px-4 text-white/90 hover:bg-white/10 hover:text-white rounded-lg font-medium",
+                  "w-full justify-start gap-3 h-12 px-4 text-white/90 hover:bg-white/10 hover:text-white rounded-lg font-medium relative",
                   pathname === item.href &&
                     "bg-white/20 text-white hover:bg-white/20",
                 )}
               >
                 <item.icon className="h-5 w-5 flex-shrink-0" />
                 <span className="flex-1 text-left">{item.title}</span>
+                {item.badge && (
+                  <Badge
+                    variant="secondary"
+                    className="text-xs bg-yellow-400 text-teal-800 hover:bg-yellow-300"
+                  >
+                    {item.badge}
+                  </Badge>
+                )}
               </Button>
             </Link>
           ))}
