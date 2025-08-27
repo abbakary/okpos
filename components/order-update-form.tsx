@@ -31,7 +31,7 @@ interface TechnicalUpdate {
   additional_work_needed: string
 }
 
-export function OrderUpdateForm({ order, onClose, onUpdate }: OrderUpdateFormProps) {
+export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }: OrderUpdateFormProps) {
   const [status, setStatus] = useState(order.status)
   const [priority, setPriority] = useState(order.priority)
   const [assignedTo, setAssignedTo] = useState(order.assigned_to?.toString() || "")
@@ -40,6 +40,11 @@ export function OrderUpdateForm({ order, onClose, onUpdate }: OrderUpdateFormPro
   const [discountAmount, setDiscountAmount] = useState(order.discount_amount.toString())
   const [taxAmount, setTaxAmount] = useState(order.tax_amount.toString())
   const [managerNotes, setManagerNotes] = useState("")
+  const [activeTab, setActiveTab] = useState("order_details")
+  const [showAttachments, setShowAttachments] = useState(false)
+
+  // Check if user has manager permissions for attachments
+  const canManageAttachments = userRole === "admin" || userRole === "manager"
   
   // Technical update fields for car service
   const [technicalUpdate, setTechnicalUpdate] = useState<TechnicalUpdate>({
