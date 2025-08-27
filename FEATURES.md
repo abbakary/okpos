@@ -115,6 +115,16 @@ Different forms based on order type:
 5. Success notification displayed
 6. Documents available in respective modules
 
+### **Order-Based Attachment Workflow**
+1. Manager opens order for updating
+2. Switches to "Customer Attachments" tab
+3. Views existing customer documents
+4. Uploads new files with category selection
+5. Files validated for type and size
+6. Upload progress tracked in real-time
+7. Files stored and linked to customer
+8. Returns to order processing
+
 ### **File Upload Workflow**
 1. Manager selects files and category
 2. Files validated for type and size
