@@ -40,7 +40,14 @@ export default function DashboardPage() {
               <DashboardStats />
 
               {/* Charts */}
-              <DashboardCharts />
+              <Suspense fallback={
+                <div className="grid gap-4 md:grid-cols-2">
+                  <Skeleton className="h-[400px]" />
+                  <Skeleton className="h-[400px]" />
+                </div>
+              }>
+                <DashboardCharts />
+              </Suspense>
             </div>
           </main>
         </div>
