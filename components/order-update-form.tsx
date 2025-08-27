@@ -612,7 +612,7 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
       {showAttachments && (
         <CustomerAttachments
           customerId={order.customer_id}
-          customerName={`Customer ID: ${order.customer_id}`}
+          customerName={getCustomerName()}
           onClose={() => setShowAttachments(false)}
         />
       )}
