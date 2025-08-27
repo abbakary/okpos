@@ -1,12 +1,12 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Badge } from "@/components/ui/badge"
-import { useUser } from "@/lib/user-context"
+import { Link } from "react-router-dom"
+import { useLocation } from "react-router-dom"
+import { cn } from "../lib/utils"
+import { Button } from "./ui/button"
+import { ScrollArea } from "./ui/scroll-area"
+import { Badge } from "./ui/badge"
+import { useUser } from "../lib/user-context"
 import {
   LayoutDashboard,
   Users,
@@ -109,7 +109,8 @@ const getNavigationItems = (userType: string) => {
 }
 
 export function DashboardSidebar({ className }: SidebarProps) {
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
   const { currentUser, isAdmin } = useUser()
 
   const navigation = getNavigationItems(currentUser?.user_type || "office_manager")
