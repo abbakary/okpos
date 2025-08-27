@@ -314,7 +314,7 @@ export function EnhancedLoginForm() {
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-yellow-400 border-yellow-500 text-gray-800 hover:bg-yellow-300 font-semibold"
+                        className="flex-1 bg-yellow-200 border-yellow-300 text-gray-700 hover:bg-yellow-100 font-semibold"
                         onClick={() => {
                           setUserType("admin")
                           setUsername("admin")
@@ -327,7 +327,7 @@ export function EnhancedLoginForm() {
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-yellow-400 border-yellow-500 text-gray-800 hover:bg-yellow-300 font-semibold"
+                        className="flex-1 bg-yellow-200 border-yellow-300 text-gray-700 hover:bg-yellow-100 font-semibold"
                         onClick={() => {
                           setUserType("office_manager")
                           setUsername("manager")
