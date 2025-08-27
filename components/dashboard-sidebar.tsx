@@ -161,11 +161,28 @@ export function DashboardSidebar({ className }: SidebarProps) {
       <div className="p-4">
         <div className="flex items-center gap-3 px-2 py-3 rounded-lg bg-white/10">
           <div className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center">
-            <span className="text-sm font-semibold text-teal-600">A</span>
+            <span className="text-sm font-semibold text-teal-600">
+              {currentUser?.full_name?.split(" ").map(n => n[0]).join("").toUpperCase() || "U"}
+            </span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-white truncate">Admin User</p>
-            <p className="text-xs text-white/70 truncate">admin@autocare.com</p>
+            <p className="text-sm font-medium text-white truncate">
+              {currentUser?.full_name || "User"}
+            </p>
+            <p className="text-xs text-white/70 truncate">
+              {currentUser?.email || "user@autocare.com"}
+            </p>
+            <Badge
+              variant="outline"
+              className={cn(
+                "text-xs mt-1 border-white/30 text-white",
+                isAdmin
+                  ? "bg-red-500/20 border-red-300/50"
+                  : "bg-blue-500/20 border-blue-300/50"
+              )}
+            >
+              {isAdmin ? "ADMIN ACCESS" : "MANAGER ACCESS"}
+            </Badge>
           </div>
         </div>
       </div>
