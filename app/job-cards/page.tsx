@@ -423,12 +423,12 @@ export default function JobCardsPage() {
                                   </span>
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 {jobCard.estimated_duration && jobCard.actual_duration && (
                                   <div className="flex items-center gap-1">
                                     <span className={`text-sm font-medium ${
-                                      calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 90 
-                                        ? "text-green-600" 
+                                      calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 90
+                                        ? "text-green-600"
                                         : calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 70
                                           ? "text-yellow-600"
                                           : "text-red-600"
