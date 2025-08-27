@@ -471,13 +471,13 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
                               <TableCell>
                                 <div className="font-medium">{getCustomerName(order.customer_id)}</div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <Badge className={orderTypeColors[order.order_type]}>
                                   {order.order_type}
                                 </Badge>
                               </TableCell>
-                              <TableCell>{getVehicleInfo(order.vehicle_id)}</TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">{getVehicleInfo(order.vehicle_id)}</TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="max-w-xs truncate" title={order.description}>
                                   {order.description}
                                 </div>
@@ -487,25 +487,25 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
                                   {order.status.replace("_", " ")}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <Badge className={priorityColors[order.priority]}>
                                   {order.priority}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">
-                                    {order.status === "in_progress" && timeTracking[order.id] 
+                                    {order.status === "in_progress" && timeTracking[order.id]
                                       ? formatDuration(timeTracking[order.id].current)
-                                      : order.status === "completed" 
+                                      : order.status === "completed"
                                         ? "Completed"
                                         : "Pending"
                                     }
                                   </span>
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <div className="text-sm">TSH {order.final_amount.toLocaleString()}</div>
                               </TableCell>
                               <TableCell>
