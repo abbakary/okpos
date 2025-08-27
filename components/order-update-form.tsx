@@ -120,6 +120,19 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
     { id: "4", name: "Grace Wanjiku" },
   ]
 
+  // Mock customers data to get customer name
+  const mockCustomers = [
+    { id: 1, name: "John Mwalimu" },
+    { id: 2, name: "Tanzania Revenue Authority" },
+    { id: 3, name: "Mama Fatuma" },
+    { id: 4, name: "Sarah Hassan" },
+  ]
+
+  const getCustomerName = () => {
+    const customer = mockCustomers.find(c => c.id === order.customer_id)
+    return customer?.name || `Customer ID: ${order.customer_id}`
+  }
+
   return (
     <Dialog open={true} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
