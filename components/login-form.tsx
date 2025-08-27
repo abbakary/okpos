@@ -25,10 +25,10 @@ export function LoginForm() {
     setError("")
     setIsLoading(true)
 
-    // Mock authentication - in real app this would be API call
+    // Fast demo authentication - reduced delay for better UX
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
-      
+      await new Promise(resolve => setTimeout(resolve, 300)) // Reduced from 1000ms to 300ms
+
       // Simple demo authentication
       const validCredentials = {
         admin: { username: "admin", password: "admin123" },
