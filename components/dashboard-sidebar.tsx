@@ -110,6 +110,9 @@ const getNavigationItems = (userType: string) => {
 
 export function DashboardSidebar({ className }: SidebarProps) {
   const pathname = usePathname()
+  const { currentUser, isAdmin } = useUser()
+
+  const navigation = getNavigationItems(currentUser?.user_type || "office_manager")
 
   return (
     <div className={cn("flex h-full w-64 flex-col bg-teal-600 text-white", className)}>
