@@ -393,13 +393,13 @@ export default function JobCardsPage() {
                               <TableCell>
                                 <div className="font-medium">{getCustomerName(jobCard.customer_id)}</div>
                               </TableCell>
-                              <TableCell>{getVehicleInfo(jobCard.vehicle_id)}</TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">{getVehicleInfo(jobCard.vehicle_id)}</TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="max-w-xs truncate" title={jobCard.work_description}>
                                   {jobCard.work_description}
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <div className="flex items-center gap-1">
                                   <User className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">{getTechnicianName(jobCard.assigned_technician)}</span>
@@ -410,13 +410,13 @@ export default function JobCardsPage() {
                                   {jobCard.status.replace("_", " ")}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">
-                                    {jobCard.status === "in_progress" && timeTracking[jobCard.id] 
+                                    {jobCard.status === "in_progress" && timeTracking[jobCard.id]
                                       ? formatDuration(timeTracking[jobCard.id].current)
-                                      : jobCard.actual_duration 
+                                      : jobCard.actual_duration
                                         ? formatDuration(jobCard.actual_duration)
                                         : formatDuration(jobCard.estimated_duration || 0)
                                     }
