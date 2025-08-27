@@ -98,11 +98,6 @@ const navigation = [
 
 export function DashboardSidebar({ className }: SidebarProps) {
   const pathname = usePathname()
-  const [expandedSections, setExpandedSections] = useState<string[]>([])
-
-  const toggleSection = (title: string) => {
-    setExpandedSections((prev) => (prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]))
-  }
 
   return (
     <div className={cn("flex h-full w-64 flex-col bg-sidebar border-r border-sidebar-border", className)}>
@@ -135,22 +130,9 @@ export function DashboardSidebar({ className }: SidebarProps) {
                           pathname === item.href &&
                             "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
                         )}
-                        onClick={() => item.hasSubmenu && toggleSection(item.title)}
                       >
                         <item.icon className="h-4 w-4 flex-shrink-0" />
                         <span className="flex-1 text-left text-sm">{item.title}</span>
-                        {item.hasSubmenu && (
-                          <div className="flex-shrink-0 w-6 h-4 flex items-center justify-center">
-                            <div
-                              className={cn(
-                                "w-4 h-2 rounded-full transition-all duration-200",
-                                expandedSections.includes(item.title)
-                                  ? "bg-sidebar-primary-foreground"
-                                  : "bg-sidebar-foreground/40"
-                              )}
-                            />
-                          </div>
-                        )}
                       </Button>
                     </Link>
                   </div>
