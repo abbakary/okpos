@@ -72,6 +72,7 @@ export default function CustomersPage() {
   const [showCustomerForm, setShowCustomerForm] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [showCustomerDetails, setShowCustomerDetails] = useState(false)
+  const [customers, setCustomers] = useState(mockCustomers)
 
   const filteredCustomers = mockCustomers.filter((customer) => {
     const matchesSearch =
