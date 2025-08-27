@@ -195,14 +195,14 @@ export function JobCardForm({ onClose, onSave }: JobCardFormProps) {
                       </Select>
                     </div>
 
-                    {selectedOrder && (
+                    {selectedOrderData && (
                       <div className="p-3 bg-muted rounded-md">
                         <h4 className="font-medium">Selected Order</h4>
                         <p className="text-sm text-muted-foreground">
-                          Order: {selectedOrder?.order_number}
+                          Order: {selectedOrderData?.order_number}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Customer: {selectedOrder?.customer_name}
+                          Customer: {selectedOrderData?.customer_name}
                         </p>
                       </div>
                     )}
