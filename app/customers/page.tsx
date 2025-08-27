@@ -274,7 +274,6 @@ export default function CustomersPage() {
       {showCustomerDetails && selectedCustomer && (
         <CustomerDetails
           customer={selectedCustomer}
-          userRole="admin" // In real app, this would come from authentication context
           onClose={() => {
             setShowCustomerDetails(false)
             setSelectedCustomer(null)
