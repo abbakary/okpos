@@ -139,10 +139,11 @@ Different forms based on order type:
 - **Improved Tracking**: Complete audit trail of all activities
 
 ### **For Managers**
-- **Complete Visibility**: All customer documents in one place
+- **Contextual Document Management**: Upload customer documents while processing orders
+- **Complete Visibility**: All customer documents accessible during order updates
 - **Quality Control**: Standardized document generation
 - **Compliance**: Proper documentation and filing
-- **Efficiency**: Streamlined workflows
+- **Efficient Workflow**: No need to switch between different sections to manage documents
 
 ### **For Customers**
 - **Faster Service**: Quicker job card creation
