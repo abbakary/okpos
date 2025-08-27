@@ -1,18 +1,16 @@
-"use client"
-
 import { useState } from "react"
-import { AuthWrapper } from "@/components/auth-wrapper"
-import { DashboardSidebar } from "@/components/dashboard-sidebar"
-import { DashboardHeader } from "@/components/dashboard-header"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { AuthWrapper } from "../components/auth-wrapper"
+import { DashboardSidebar } from "../components/dashboard-sidebar"
+import { DashboardHeader } from "../components/dashboard-header"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
+import { Badge } from "../components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table"
 import { Plus, Search, Filter, Eye, Edit, Phone, Mail, Car } from "lucide-react"
-import { CustomerForm } from "@/components/customer-form"
-import { CustomerDetails } from "@/components/customer-details"
+import { CustomerForm } from "../components/customer-form"
+import { CustomerDetails } from "../components/customer-details"
 
 // Mock data for demonstration
 const mockCustomers = [
@@ -74,8 +72,9 @@ export default function CustomersPage() {
   const [showCustomerForm, setShowCustomerForm] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState(null)
   const [showCustomerDetails, setShowCustomerDetails] = useState(false)
+  const [customers, setCustomers] = useState(mockCustomers)
 
-  const filteredCustomers = mockCustomers.filter((customer) => {
+  const filteredCustomers = customers.filter((customer) => {
     const matchesSearch =
       customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       customer.customer_code.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -87,6 +86,50 @@ export default function CustomersPage() {
   const handleViewCustomer = (customer: any) => {
     setSelectedCustomer(customer)
     setShowCustomerDetails(true)
+  }
+
+  const handleSaveCustomer = (formData: any) => {
+    try {
+      console.log("Received customer data:", formData)
+
+      // Extract customer data from the form submission
+      const newCustomer = {
+        id: formData.customer.id || Date.now(),
+        customer_code: formData.customer.customer_code || `CUST${String(Date.now()).slice(-6)}`,
+        name: formData.customer.name,
+        customer_type: formData.customer.customer_type || "personal",
+        phone: formData.customer.phone,
+        email: formData.customer.email || "",
+        address: formData.customer.address || "",
+        notes: formData.customer.notes || "",
+        total_visits: formData.customer.total_visits || 0,
+        total_spent: formData.customer.total_spent || 0,
+        last_visit: formData.customer.last_visit || new Date().toISOString().split('T')[0],
+        vehicles: formData.customer.vehicles || [],
+        is_active: true,
+        registration_date: formData.customer.registration_date || new Date().toISOString().split('T')[0],
+        business_info: formData.customer.business_info || null,
+      }
+
+      // Add to customers list
+      setCustomers(prev => [newCustomer, ...prev])
+
+      // Close the form
+      setShowCustomerForm(false)
+
+      // Show success message
+      alert(`Customer "${newCustomer.name}" has been successfully registered!`)
+
+      // If there's also an order, log it
+      if (formData.order) {
+        console.log("Order created:", formData.order)
+        // Here you would typically also save the order to orders state/database
+      }
+
+    } catch (error) {
+      console.error("Error saving customer:", error)
+      alert("Failed to save customer. Please try again.")
+    }
   }
 
   return (
@@ -265,10 +308,7 @@ export default function CustomersPage() {
       {showCustomerForm && (
         <CustomerForm
           onClose={() => setShowCustomerForm(false)}
-          onSave={(customer) => {
-            console.log("Saving customer:", customer)
-            setShowCustomerForm(false)
-          }}
+          onSave={handleSaveCustomer}
         />
       )}
 

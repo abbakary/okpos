@@ -1,26 +1,13 @@
-"use client"
-
-import { DialogFooter } from "@/components/ui/dialog"
-
-import { DialogDescription } from "@/components/ui/dialog"
-
-import { DialogTitle } from "@/components/ui/dialog"
-
-import { DialogHeader } from "@/components/ui/dialog"
-
-import { DialogContent } from "@/components/ui/dialog"
-
-import { Dialog } from "@/components/ui/dialog"
-
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog"
+import { Button } from "./ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import { Textarea } from "./ui/textarea"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Checkbox } from "./ui/checkbox"
+import { Badge } from "./ui/badge"
 import { Plus, Trash2, ArrowLeft, ArrowRight, Save, User, Car, Wrench, FileText, Search } from "lucide-react"
 
 interface MultiStepCustomerFormProps {
@@ -162,16 +149,29 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
     const stepData = {
       step: currentStep,
       customerData,
+      customerType,
+      businessInfo,
       vehicles,
+      serviceIntent,
       serviceType,
       tireService,
       carService,
       inquiryDetails,
       savedAt: new Date().toISOString(),
     }
-    console.log("[v0] Step saved:", stepData)
-    // Here you would save to localStorage or database
-    localStorage.setItem(`draft-customer-${Date.now()}`, JSON.stringify(stepData))
+
+    try {
+      // Save to localStorage with a unique key
+      const draftKey = `customer-draft-${customerData.phone || Date.now()}`
+      localStorage.setItem(draftKey, JSON.stringify(stepData))
+
+      // Show success feedback
+      alert("Progress saved successfully! You can continue later.")
+      console.log("Progress saved:", stepData)
+    } catch (error) {
+      console.error("Error saving progress:", error)
+      alert("Failed to save progress. Please try again.")
+    }
   }
 
   const handleCustomerInputChange = (field: string, value: string | boolean) => {
@@ -240,16 +240,93 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
   }
 
   const handleFinalSubmit = () => {
-    const finalData = {
-      customer: { ...customerData, vehicles },
-      serviceType,
-      serviceDetails:
-        serviceType === "tire_sales" ? tireService : serviceType === "car_service" ? carService : inquiryDetails,
-      orderId: `ORD-${Date.now()}`,
-      createdAt: new Date().toISOString(),
+    // Validate required fields
+    if (!customerData.name || !customerData.phone) {
+      alert("Please fill in required customer information (Name and Phone)")
+      return
     }
 
-    onSave(finalData)
+    if (serviceIntent === "service" && !serviceType) {
+      alert("Please select a service type")
+      return
+    }
+
+    if (serviceType === "tire_sales" && (!tireService.tire_size || !tireService.tire_brand)) {
+      alert("Please fill in tire service details")
+      return
+    }
+
+    if (serviceType === "car_service" && carService.service_types.length === 0) {
+      alert("Please select at least one service type for car service")
+      return
+    }
+
+    // Create comprehensive data structure
+    const finalData = {
+      customer: {
+        ...customerData,
+        customer_type: customerType,
+        business_info: (customerType === "government" || customerType === "ngo" || customerType === "private") ? businessInfo : null,
+        vehicles: serviceType === "car_service" ? vehicles : [],
+        id: selectedExistingCustomer?.id || `CUST-${Date.now()}`,
+        customer_code: selectedExistingCustomer?.customer_code || `CUST${String(Date.now()).slice(-6)}`,
+        registration_date: selectedExistingCustomer?.registration_date || new Date().toISOString().split('T')[0],
+        is_active: true,
+        total_visits: selectedExistingCustomer?.total_visits || 0,
+        total_spent: selectedExistingCustomer?.total_spent || 0,
+      },
+      order: serviceIntent === "service" ? {
+        id: `ORD-${Date.now()}`,
+        order_number: `ORD${String(Date.now()).slice(-6)}`,
+        order_type: serviceType === "tire_sales" ? "sales" : "service",
+        status: "created",
+        priority: serviceType === "car_service" ? carService.priority : "normal",
+        description: serviceType === "tire_sales"
+          ? `Tire Sales: ${tireService.quantity}x ${tireService.tire_brand} ${tireService.tire_size}`
+          : serviceType === "car_service"
+          ? `Car Service: ${carService.service_types.join(", ")}`
+          : "General inquiry",
+        estimated_completion: serviceType === "car_service"
+          ? new Date(Date.now() + carService.estimated_duration * 60000).toISOString()
+          : null,
+        total_amount: serviceType === "tire_sales" ? tireService.quantity * tireService.price_per_tire : 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      } : null,
+      service_details: {
+        service_intent: serviceIntent,
+        service_type: serviceType,
+        details: serviceType === "tire_sales" ? tireService
+               : serviceType === "car_service" ? carService
+               : inquiryDetails,
+      },
+      metadata: {
+        created_at: new Date().toISOString(),
+        created_by: "current_user", // This should come from user context
+        source: "multi_step_form",
+        draft_cleared: true,
+      }
+    }
+
+    try {
+      // Clear any saved draft since we're submitting
+      if (customerData.phone) {
+        const draftKey = `customer-draft-${customerData.phone}`
+        localStorage.removeItem(draftKey)
+      }
+
+      console.log("Submitting customer and order data:", finalData)
+
+      // Call the parent's onSave function
+      onSave(finalData)
+
+      // Success feedback
+      alert(`${serviceIntent === "service" ? "Order" : "Inquiry"} created successfully!`)
+
+    } catch (error) {
+      console.error("Error submitting data:", error)
+      alert("Failed to create order. Please try again.")
+    }
   }
 
   const renderStepContent = () => {

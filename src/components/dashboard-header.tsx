@@ -1,10 +1,8 @@
-"use client"
-
-import { usePathname } from "next/navigation"
+import { useLocation } from "react-router-dom"
 import { Search, Bell, User } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Input } from "./ui/input"
+import { Button } from "./ui/button"
+import { Badge } from "./ui/badge"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +10,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useUser, createDemoUser } from "@/lib/user-context"
+} from "./ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { useUser, createDemoUser } from "../lib/user-context"
 
 // Define page-specific content
 const getPageContent = (pathname: string, userName: string, userType: string) => {
@@ -80,7 +78,8 @@ const getPageContent = (pathname: string, userName: string, userType: string) =>
 }
 
 export function DashboardHeader() {
-  const pathname = usePathname()
+  const location = useLocation()
+  const pathname = location.pathname
   const { currentUser, setCurrentUser, logout, isAdmin } = useUser()
 
   const pageContent = getPageContent(

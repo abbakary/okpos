@@ -1,9 +1,7 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/button"
 import { Plus, Search, FileText, Clock, Shield, Eye, Package, BarChart3, Users } from "lucide-react"
-import Link from "next/link"
-import { useUser } from "@/lib/user-context"
+import { Link } from "react-router-dom"
+import { useUser } from "../lib/user-context"
 
 export function DashboardActions() {
   const { isAdmin } = useUser()
@@ -76,7 +74,7 @@ export function DashboardActions() {
 
       <div className="flex gap-4 flex-wrap">
         {actionsToShow.map((action, index) => (
-          <Link key={index} href={action.href}>
+          <Link key={index} to={action.href}>
             <Button
               className={action.className}
               variant={action.className.includes("bg-transparent") ? "outline" : "default"}
@@ -88,7 +86,7 @@ export function DashboardActions() {
         ))}
 
         {/* Common action for both roles */}
-        <Link href="/customers">
+        <Link to="/customers">
           <Button variant="outline" className="border-gray-300">
             <Users className="h-4 w-4 mr-2" />
             View All Customers

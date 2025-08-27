@@ -1,21 +1,19 @@
-"use client"
-
 import { useState, useEffect } from "react"
-import { DashboardSidebar } from "@/components/dashboard-sidebar"
-import { DashboardHeader } from "@/components/dashboard-header"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Plus, Search, Filter, Eye, Download, DollarSign, AlertTriangle, Calendar, FileText, CheckCircle, Send, Print } from "lucide-react"
-import { InvoiceDetails } from "@/components/invoice-details"
-import { PaymentForm } from "@/components/payment-form"
-import { InvoiceGenerator } from "@/components/invoice-generator"
-import { InvoiceAnalytics } from "@/components/invoice-analytics"
-import type { Invoice } from "@/lib/types"
+import { DashboardSidebar } from "../components/dashboard-sidebar"
+import { DashboardHeader } from "../components/dashboard-header"
+import { Button } from "../components/ui/button"
+import { Input } from "../components/ui/input"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
+import { Badge } from "../components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
+import { Plus, Search, Filter, Eye, Download, DollarSign, AlertTriangle, Calendar, FileText, CheckCircle, Send, Printer } from "lucide-react"
+import { InvoiceDetails } from "../components/invoice-details"
+import { PaymentForm } from "../components/payment-form"
+import { InvoiceGenerator } from "../components/invoice-generator"
+import { InvoiceAnalytics } from "../components/invoice-analytics"
+import type { Invoice } from "../lib/types"
 
 // Enhanced mock data for invoices - connected to our order management system
 const mockInvoices: Invoice[] = [
@@ -494,7 +492,7 @@ export default function InvoicesPage() {
                                       <Download className="h-4 w-4" />
                                     </Button>
                                     <Button variant="ghost" size="sm">
-                                      <Print className="h-4 w-4" />
+                                      <Printer className="h-4 w-4" />
                                     </Button>
                                     {invoice.status === "draft" && (
                                       <Button 

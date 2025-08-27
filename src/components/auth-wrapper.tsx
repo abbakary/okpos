@@ -1,7 +1,5 @@
-"use client"
-
-import { useUser } from "@/lib/user-context"
-import { LoginForm } from "@/components/login-form"
+import { useUser } from "../lib/user-context"
+import { LoginForm } from "./login-form"
 
 interface AuthWrapperProps {
   children: React.ReactNode
