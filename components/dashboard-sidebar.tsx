@@ -32,48 +32,81 @@ interface SidebarProps {
   className?: string
 }
 
-const navigation = [
-  {
-    title: "Dashboard",
-    href: "/",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Customer Registration",
-    href: "/customers",
-    icon: Users,
-  },
-  {
-    title: "Orders & Services",
-    href: "/orders",
-    icon: ClipboardList,
-  },
-  {
-    title: "Job Cards & Tracking",
-    href: "/job-cards",
-    icon: Wrench,
-  },
-  {
-    title: "Time Tracking",
-    href: "/time-tracking",
-    icon: Car,
-  },
-  {
-    title: "Invoices & Payments",
-    href: "/invoices",
-    icon: FileText,
-  },
-  {
-    title: "Inventory Management",
-    href: "/inventory",
-    icon: Package,
-  },
-  {
-    title: "Analytics & Reports",
-    href: "/reports",
-    icon: BarChart3,
-  },
-]
+// Role-based navigation configuration
+const getNavigationItems = (userType: string) => {
+  const commonItems = [
+    {
+      title: "Dashboard",
+      href: "/",
+      icon: LayoutDashboard,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Customer Registration",
+      href: "/customers",
+      icon: Users,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Orders & Services",
+      href: "/orders",
+      icon: ClipboardList,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Job Cards & Tracking",
+      href: "/job-cards",
+      icon: Wrench,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Time Tracking",
+      href: "/time-tracking",
+      icon: Car,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Invoices & Payments",
+      href: "/invoices",
+      icon: FileText,
+      roles: ["admin", "office_manager"],
+    },
+  ]
+
+  const adminOnlyItems = [
+    {
+      title: "Inventory Management",
+      href: "/inventory",
+      icon: Package,
+      roles: ["admin"],
+      badge: "ADMIN ONLY",
+    },
+    {
+      title: "Analytics & Reports",
+      href: "/reports",
+      icon: BarChart3,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Manager Activities",
+      href: "/manager-activities",
+      icon: Eye,
+      roles: ["admin"],
+      badge: "OVERSIGHT",
+    },
+    {
+      title: "User Management",
+      href: "/user-management",
+      icon: Shield,
+      roles: ["admin"],
+      badge: "ADMIN ONLY",
+    },
+  ]
+
+  return [...commonItems, ...adminOnlyItems].filter(item =>
+    item.roles.includes(userType)
+  )
+}
 
 export function DashboardSidebar({ className }: SidebarProps) {
   const pathname = usePathname()
