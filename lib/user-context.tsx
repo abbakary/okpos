@@ -6,8 +6,10 @@ import { User } from "./types"
 interface UserContextType {
   currentUser: User | null
   setCurrentUser: (user: User | null) => void
+  logout: () => void
   isAdmin: boolean
   isManager: boolean
+  isAuthenticated: boolean
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined)
