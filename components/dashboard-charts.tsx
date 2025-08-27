@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, lazy } from "react"
+import { Suspense, lazy, useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,16 +8,8 @@ import { MoreHorizontal } from "lucide-react"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { ChartSkeleton } from "@/components/chart-skeleton"
 
-// Lazy load heavy chart components
-const LineChart = lazy(() => import("recharts").then(module => ({ default: module.LineChart })))
-const Line = lazy(() => import("recharts").then(module => ({ default: module.Line })))
-const XAxis = lazy(() => import("recharts").then(module => ({ default: module.XAxis })))
-const YAxis = lazy(() => import("recharts").then(module => ({ default: module.YAxis })))
-const CartesianGrid = lazy(() => import("recharts").then(module => ({ default: module.CartesianGrid })))
-const ResponsiveContainer = lazy(() => import("recharts").then(module => ({ default: module.ResponsiveContainer })))
-const PieChart = lazy(() => import("recharts").then(module => ({ default: module.PieChart })))
-const Pie = lazy(() => import("recharts").then(module => ({ default: module.Pie })))
-const Cell = lazy(() => import("recharts").then(module => ({ default: module.Cell })))
+// Lazy load the entire recharts components
+const LazyCharts = lazy(() => import("@/components/chart-components"))
 
 const performanceData = [
   { name: "Mon", carServices: 1800, tyreSales: 1200 },
