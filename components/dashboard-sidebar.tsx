@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -15,6 +14,14 @@ import {
   BarChart3,
   Car,
   Wrench,
+  FolderOpen,
+  MessageSquare,
+  Bookmark,
+  Phone,
+  CheckSquare,
+  Calendar,
+  Share2,
+  Grid3X3,
 } from "lucide-react"
 
 interface SidebarProps {
@@ -23,69 +30,64 @@ interface SidebarProps {
 
 const navigation = [
   {
-    title: "GENERAL",
-    items: [
-      {
-        title: "Dashboard",
-        href: "/",
-        icon: LayoutDashboard,
-      },
-    ],
+    title: "Dashboard",
+    href: "/",
+    icon: LayoutDashboard,
   },
   {
-    title: "CUSTOMER & ORDERS",
-    items: [
-      {
-        title: "Customer Registration",
-        href: "/customers",
-        icon: Users,
-      },
-      {
-        title: "Orders & Services",
-        href: "/orders",
-        icon: ClipboardList,
-      },
-    ],
+    title: "File Manager",
+    href: "/file-manager",
+    icon: FolderOpen,
   },
   {
-    title: "OPERATIONS",
-    items: [
-      {
-        title: "Job Cards & Tracking",
-        href: "/job-cards",
-        icon: Wrench,
-      },
-      {
-        title: "Time Tracking",
-        href: "/time-tracking",
-        icon: Car,
-      },
-    ],
+    title: "Kanban Board",
+    href: "/kanban",
+    icon: Grid3X3,
   },
   {
-    title: "FINANCIAL",
-    items: [
-      {
-        title: "Invoices & Payments",
-        href: "/invoices",
-        icon: FileText,
-      },
-      {
-        title: "Inventory Management",
-        href: "/inventory",
-        icon: Package,
-      },
-    ],
+    title: "Ecommerce",
+    href: "/ecommerce",
+    icon: Package,
   },
   {
-    title: "REPORTS",
-    items: [
-      {
-        title: "Analytics & Reports",
-        href: "/reports",
-        icon: BarChart3,
-      },
-    ],
+    title: "Letter Box",
+    href: "/letter-box",
+    icon: FileText,
+  },
+  {
+    title: "Chat",
+    href: "/chat",
+    icon: MessageSquare,
+  },
+  {
+    title: "Users",
+    href: "/customers",
+    icon: Users,
+  },
+  {
+    title: "Bookmarks",
+    href: "/orders",
+    icon: Bookmark,
+  },
+  {
+    title: "Contacts",
+    href: "/contacts",
+    icon: Phone,
+  },
+  {
+    title: "Tasks",
+    href: "/job-cards",
+    icon: CheckSquare,
+  },
+  {
+    title: "Calendar",
+    href: "/calendar",
+    icon: Calendar,
+  },
+  {
+    title: "Social App",
+    href: "/social",
+    icon: Share2,
   },
 ]
 
@@ -93,57 +95,49 @@ export function DashboardSidebar({ className }: SidebarProps) {
   const pathname = usePathname()
 
   return (
-    <div className={cn("flex h-full w-64 flex-col bg-sidebar border-r border-sidebar-border", className)}>
+    <div className={cn("flex h-full w-64 flex-col bg-teal-600 text-white", className)}>
       {/* Logo */}
-      <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary">
-            <Car className="h-5 w-5 text-sidebar-primary-foreground" />
+      <div className="flex h-16 items-center px-6">
+        <div className="flex items-center gap-3">
+          <div className="flex h-8 w-8 items-center justify-center">
+            <div className="w-6 h-6 bg-yellow-400 rounded-sm flex items-center justify-center">
+              <div className="w-3 h-3 bg-white rounded-full"></div>
+            </div>
           </div>
-          <span className="text-xl font-bold text-sidebar-foreground">AutoCare</span>
+          <span className="text-xl font-bold text-white">Riho</span>
         </div>
       </div>
 
       {/* Navigation */}
       <ScrollArea className="flex-1 px-4 py-4">
-        <nav className="space-y-6">
-          {navigation.map((section) => (
-            <div key={section.title}>
-              <h3 className="mb-2 px-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider">
-                {section.title}
-              </h3>
-              <div className="space-y-1">
-                {section.items.map((item) => (
-                  <div key={item.href}>
-                    <Link href={item.href}>
-                      <Button
-                        variant="ghost"
-                        className={cn(
-                          "w-full justify-start gap-3 h-10 px-3 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                          pathname === item.href &&
-                            "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground",
-                        )}
-                      >
-                        <item.icon className="h-4 w-4 flex-shrink-0" />
-                        <span className="flex-1 text-left text-sm">{item.title}</span>
-                      </Button>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
+        <nav className="space-y-1">
+          {navigation.map((item) => (
+            <Link key={item.href} href={item.href}>
+              <Button
+                variant="ghost"
+                className={cn(
+                  "w-full justify-start gap-3 h-12 px-4 text-white/90 hover:bg-white/10 hover:text-white rounded-lg font-medium",
+                  pathname === item.href &&
+                    "bg-white/20 text-white hover:bg-white/20",
+                )}
+              >
+                <item.icon className="h-5 w-5 flex-shrink-0" />
+                <span className="flex-1 text-left">{item.title}</span>
+              </Button>
+            </Link>
           ))}
         </nav>
       </ScrollArea>
 
-      <div className="border-t border-sidebar-border p-4">
-        <div className="flex items-center gap-3 px-2 py-2">
-          <div className="h-8 w-8 rounded-full bg-sidebar-primary flex items-center justify-center">
-            <span className="text-sm font-medium text-sidebar-primary-foreground">A</span>
+      {/* User Profile */}
+      <div className="p-4">
+        <div className="flex items-center gap-3 px-2 py-3 rounded-lg bg-white/10">
+          <div className="h-8 w-8 rounded-full bg-yellow-400 flex items-center justify-center">
+            <span className="text-sm font-semibold text-teal-600">A</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-sidebar-foreground truncate">Admin User</p>
-            <p className="text-xs text-sidebar-foreground/70 truncate">admin@autocare.com</p>
+            <p className="text-sm font-medium text-white truncate">Admin User</p>
+            <p className="text-xs text-white/70 truncate">admin@autocare.com</p>
           </div>
         </div>
       </div>
