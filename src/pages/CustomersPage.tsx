@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { AuthWrapper } from "../components/auth-wrapper"
 import { DashboardSidebar } from "../components/dashboard-sidebar"
