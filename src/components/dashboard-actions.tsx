@@ -74,7 +74,7 @@ export function DashboardActions() {
 
       <div className="flex gap-4 flex-wrap">
         {actionsToShow.map((action, index) => (
-          <Link key={index} href={action.href}>
+          <Link key={index} to={action.href}>
             <Button
               className={action.className}
               variant={action.className.includes("bg-transparent") ? "outline" : "default"}
@@ -86,7 +86,7 @@ export function DashboardActions() {
         ))}
 
         {/* Common action for both roles */}
-        <Link href="/customers">
+        <Link to="/customers">
           <Button variant="outline" className="border-gray-300">
             <Users className="h-4 w-4 mr-2" />
             View All Customers
