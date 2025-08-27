@@ -63,7 +63,7 @@ export function JobCardForm({ onClose, onSave }: JobCardFormProps) {
 
   const selectedCustomer = mockCustomers.find(c => c.id.toString() === customerId)
   const customerVehicles = mockVehicles.filter(v => v.customer_id.toString() === customerId)
-  const selectedOrder = mockOrders.find(o => o.id.toString() === selectedOrder)
+  const selectedOrderData = mockOrders.find(o => o.id.toString() === selectedOrder)
 
   const handleOrderSelect = (orderId: string) => {
     setSelectedOrder(orderId)
