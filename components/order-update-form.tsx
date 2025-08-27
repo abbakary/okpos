@@ -19,6 +19,7 @@ interface OrderUpdateFormProps {
   order: Order
   onClose: () => void
   onUpdate: (order: Order) => void
+  userRole?: "admin" | "manager" | "user" // Add user role for attachment permissions
 }
 
 interface TechnicalUpdate {
