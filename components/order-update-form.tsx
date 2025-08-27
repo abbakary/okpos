@@ -507,7 +507,7 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
                 <CardContent>
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground">
-                      As a manager updating this order, you can upload and manage documents for <strong>{order.customer_id ? `Customer ID: ${order.customer_id}` : 'this customer'}</strong> including:
+                      As a manager updating this order, you can upload and manage documents for <strong>{getCustomerName()}</strong> including:
                       ID documents, vehicle papers, service records, photos, invoices, and more.
                     </p>
 
