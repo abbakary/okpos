@@ -126,11 +126,38 @@ export function LoginForm() {
               </div>
             </div>
 
-            <div className="bg-blue-50 p-3 rounded-lg text-sm">
-              <p className="font-medium text-blue-800 mb-1">Demo Credentials:</p>
-              <p className="text-blue-700">
-                <strong>Admin:</strong> admin / admin123<br />
-                <strong>Manager:</strong> manager / manager123
+            <div className="bg-blue-50 p-3 rounded-lg text-sm space-y-2">
+              <p className="font-medium text-blue-800 mb-2">Quick Demo Login:</p>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => {
+                    setUserType("admin")
+                    setUsername("admin")
+                    setPassword("admin123")
+                  }}
+                >
+                  Fill Admin
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => {
+                    setUserType("office_manager")
+                    setUsername("manager")
+                    setPassword("manager123")
+                  }}
+                >
+                  Fill Manager
+                </Button>
+              </div>
+              <p className="text-blue-700 text-xs">
+                <strong>Admin:</strong> admin / admin123 • <strong>Manager:</strong> manager / manager123
               </p>
             </div>
           </CardContent>
