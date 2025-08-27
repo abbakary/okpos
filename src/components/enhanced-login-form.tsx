@@ -186,7 +186,7 @@ export function EnhancedLoginForm() {
         }
       `}</style>
 
-      <div className="min-h-screen flex particle-bg relative overflow-hidden">
+      <div className="min-h-screen flex flex-col md:flex-row particle-bg relative overflow-hidden">
         {/* Floating Particles */}
         {particles.map((particle) => (
           <Particle
@@ -198,29 +198,29 @@ export function EnhancedLoginForm() {
           />
         ))}
 
-        {/* Left Side - Moving Tire */}
-        <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600 overflow-hidden">
+        {/* Left Side - Moving Tire (visible on all screens) */}
+        <div className="flex w-full md:w-1/2 relative items-center justify-center bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600 overflow-hidden min-h-[200px] md:min-h-screen">
           <div className="absolute inset-0 bg-black bg-opacity-10"></div>
-          
+
           {/* Multiple tire instances for continuous effect */}
           <MovingTire />
-          
+
           {/* Welcome Text Overlay */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-8">
-            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4 drop-shadow-lg">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4 md:p-8">
+            <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4 drop-shadow-lg">
               Welcome to
             </h1>
-            <h2 className="text-3xl lg:text-5xl font-bold text-yellow-100 mb-8 drop-shadow-lg">
+            <h2 className="text-xl md:text-3xl lg:text-5xl font-bold text-yellow-100 mb-4 md:mb-8 drop-shadow-lg">
               Superdoll
             </h2>
-            <p className="text-xl text-white max-w-md leading-relaxed drop-shadow-md">
+            <p className="text-sm md:text-xl text-white max-w-md leading-relaxed drop-shadow-md">
               Professional car service tracking and management system
             </p>
           </div>
         </div>
 
         {/* Right Side - Login Form */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 lg:p-8 relative">
+        <div className="w-full md:w-1/2 flex items-center justify-center p-4 lg:p-8 relative">
           <div className="w-full max-w-md">
             <Card className="glass-effect border-0 shadow-2xl">
               <CardHeader className="text-center pb-2">
