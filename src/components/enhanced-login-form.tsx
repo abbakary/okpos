@@ -14,7 +14,7 @@ import { useUser, createDemoUser } from "@/lib/user-context"
 const Particle = ({ delay, duration, startX, startY }: { delay: number; duration: number; startX: number; startY: number }) => {
   return (
     <div
-      className="absolute w-2 h-2 bg-yellow-300 rounded-full opacity-30 animate-pulse"
+      className="absolute w-2 h-2 bg-yellow-200 rounded-full opacity-20 animate-pulse"
       style={{
         left: `${startX}%`,
         top: `${startY}%`,
@@ -174,7 +174,7 @@ export function EnhancedLoginForm() {
         }
         
         .particle-bg {
-          background: linear-gradient(-45deg, #fbbf24, #f59e0b, #d97706, #b45309, #92400e);
+          background: linear-gradient(-45deg, #fef3c7, #fde68a, #fcd34d, #f59e0b, #d97706);
           background-size: 400% 400%;
           animation: gradientShift 15s ease infinite;
         }
@@ -199,8 +199,8 @@ export function EnhancedLoginForm() {
         ))}
 
         {/* Left Side - Moving Tire (visible on all screens) */}
-        <div className="flex w-full md:w-1/2 relative items-center justify-center bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600 overflow-hidden min-h-[200px] md:min-h-screen">
-          <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+        <div className="flex w-full md:w-1/2 relative items-center justify-center bg-gradient-to-br from-yellow-100 via-yellow-200 to-amber-300 overflow-hidden min-h-[200px] md:min-h-screen">
+          <div className="absolute inset-0 bg-black bg-opacity-5"></div>
 
           {/* Multiple tire instances for continuous effect */}
           <MovingTire />
@@ -226,7 +226,7 @@ export function EnhancedLoginForm() {
               <CardHeader className="text-center pb-2">
                 <div className="flex justify-center mb-4">
                   <div className="flex h-16 w-16 items-center justify-center">
-                    <div className="w-12 h-12 bg-yellow-400 rounded-lg flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-yellow-200 rounded-lg flex items-center justify-center shadow-lg">
                       <div className="w-6 h-6 bg-white rounded-full"></div>
                     </div>
                   </div>
@@ -344,9 +344,9 @@ export function EnhancedLoginForm() {
                 </CardContent>
 
                 <CardFooter className="px-6 pb-6">
-                  <Button 
-                    type="submit" 
-                    className="w-full h-12 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-800 font-bold text-lg shadow-lg" 
+                  <Button
+                    type="submit"
+                    className="w-full h-12 bg-gradient-to-r from-yellow-300 to-amber-400 hover:from-yellow-400 hover:to-amber-500 text-gray-800 font-bold text-lg shadow-lg"
                     disabled={isLoading}
                   >
                     {isLoading ? "Signing In..." : "Sign In"}
