@@ -247,13 +247,18 @@ export default function CustomersPage() {
                     </TableHeader>
                     <TableBody>
                       {filteredCustomers.map((customer, index) => {
-                        // Array of cargo vehicle images to rotate through
-                        const vehicleImages = [
-                          "https://images.pexels.com/photos/18468424/pexels-photo-18468424.jpeg",
-                          "https://images.pexels.com/photos/6169056/pexels-photo-6169056.jpeg",
-                          "https://images.pexels.com/photos/7006131/pexels-photo-7006131.jpeg"
-                        ];
-                        const imageUrl = vehicleImages[index % vehicleImages.length];
+                        // Vehicle images based on customer type
+                        const getVehicleImage = (customerType: string) => {
+                          const vehicleImages = {
+                            government: "https://images.pexels.com/photos/9888685/pexels-photo-9888685.jpeg", // Official vehicle
+                            ngo: "https://images.pexels.com/photos/7464392/pexels-photo-7464392.jpeg", // Van for humanitarian work
+                            private: "https://images.pexels.com/photos/7464392/pexels-photo-7464392.jpeg", // Commercial van
+                            personal: "https://images.pexels.com/photos/8766145/pexels-photo-8766145.jpeg", // Personal car
+                            bodaboda: "https://images.pexels.com/photos/2116475/pexels-photo-2116475.jpeg" // Motorcycle
+                          };
+                          return vehicleImages[customerType as keyof typeof vehicleImages] || vehicleImages.personal;
+                        };
+                        const imageUrl = getVehicleImage(customer.customer_type);
 
                         return (
                         <TableRow key={customer.id}>
