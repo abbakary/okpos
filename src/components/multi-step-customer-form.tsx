@@ -149,16 +149,29 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
     const stepData = {
       step: currentStep,
       customerData,
+      customerType,
+      businessInfo,
       vehicles,
+      serviceIntent,
       serviceType,
       tireService,
       carService,
       inquiryDetails,
       savedAt: new Date().toISOString(),
     }
-    console.log("[v0] Step saved:", stepData)
-    // Here you would save to localStorage or database
-    localStorage.setItem(`draft-customer-${Date.now()}`, JSON.stringify(stepData))
+
+    try {
+      // Save to localStorage with a unique key
+      const draftKey = `customer-draft-${customerData.phone || Date.now()}`
+      localStorage.setItem(draftKey, JSON.stringify(stepData))
+
+      // Show success feedback
+      alert("Progress saved successfully! You can continue later.")
+      console.log("Progress saved:", stepData)
+    } catch (error) {
+      console.error("Error saving progress:", error)
+      alert("Failed to save progress. Please try again.")
+    }
   }
 
   const handleCustomerInputChange = (field: string, value: string | boolean) => {
