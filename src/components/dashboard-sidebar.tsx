@@ -133,7 +133,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
       <ScrollArea className="flex-1 px-4 py-4">
         <nav className="space-y-1">
           {navigation.map((item) => (
-            <Link key={item.href} href={item.href}>
+            <Link key={item.href} to={item.href}>
               <Button
                 variant="ghost"
                 className={cn(
