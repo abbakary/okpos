@@ -28,24 +28,43 @@ const Particle = ({ delay, duration, startX, startY }: { delay: number; duration
 const MovingTire = () => {
   return (
     <div className="relative w-full h-full overflow-hidden">
-      <div className="absolute inset-0 flex items-center justify-start">
-        <div
-          className="tire-container absolute"
+      {/* First tire */}
+      <div
+        className="tire-container absolute top-1/2 transform -translate-y-1/2"
+        style={{
+          animation: 'moveTire 8s linear infinite',
+          left: '-200px',
+        }}
+      >
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2Feb7c259a701147c18f9b0bd157a7f55e%2Fb8133418b26f42ecb77ba0be17c056b0?format=webp&width=800"
+          alt="Moving Tire"
+          className="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 object-contain"
           style={{
-            animation: 'moveTire 10s linear infinite',
-            left: '-200px',
+            filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+            animation: 'rotateTire 2s linear infinite',
           }}
-        >
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets%2Feb7c259a701147c18f9b0bd157a7f55e%2Fb8133418b26f42ecb77ba0be17c056b0?format=webp&width=800"
-            alt="Moving Tire"
-            className="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 object-contain"
-            style={{
-              filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
-              animation: 'rotateTire 2s linear infinite',
-            }}
-          />
-        </div>
+        />
+      </div>
+
+      {/* Second tire (delayed) */}
+      <div
+        className="tire-container absolute top-1/2 transform -translate-y-1/2"
+        style={{
+          animation: 'moveTire 8s linear infinite',
+          animationDelay: '4s',
+          left: '-200px',
+        }}
+      >
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets%2Feb7c259a701147c18f9b0bd157a7f55e%2Fb8133418b26f42ecb77ba0be17c056b0?format=webp&width=800"
+          alt="Moving Tire"
+          className="w-24 h-24 md:w-40 md:h-40 lg:w-52 lg:h-52 object-contain opacity-70"
+          style={{
+            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.2))',
+            animation: 'rotateTire 1.8s linear infinite',
+          }}
+        />
       </div>
     </div>
   )
@@ -110,10 +129,10 @@ export function EnhancedLoginForm() {
       <style jsx>{`
         @keyframes moveTire {
           0% {
-            transform: translateX(0px);
+            transform: translateX(0px) translateY(-50%);
           }
           100% {
-            transform: translateX(calc(100vw + 400px));
+            transform: translateX(calc(100vw + 300px)) translateY(-50%);
           }
         }
         
