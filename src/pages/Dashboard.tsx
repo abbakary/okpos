@@ -3,7 +3,7 @@ import { AuthWrapper } from "../components/auth-wrapper"
 import { DashboardSidebar } from "../components/dashboard-sidebar"
 import { DashboardHeader } from "../components/dashboard-header"
 import { DashboardStats } from "../components/dashboard-stats"
-import { DashboardActions } from "../components/dashboard-actions"
+import { DashboardReports } from "../components/dashboard-reports"
 import { Skeleton } from "../components/ui/skeleton"
 
 // Lazy load charts to improve initial load time
@@ -31,8 +31,8 @@ export default function Dashboard() {
                 <span className="text-foreground">Tracking Dashboard</span>
               </div>
 
-              {/* Action Buttons */}
-              <DashboardActions />
+              {/* Report Tracking Status */}
+              <DashboardReports />
 
               {/* Statistics Cards */}
               <DashboardStats />

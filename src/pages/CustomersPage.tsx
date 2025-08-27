@@ -234,19 +234,50 @@ export default function CustomersPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="w-[20%]">Customer</TableHead>
+                        <TableHead className="w-[12%] hidden md:table-cell">Vehicle</TableHead>
+                        <TableHead className="w-[18%]">Customer</TableHead>
                         <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
-                        <TableHead className="w-[25%]">Contact</TableHead>
+                        <TableHead className="w-[20%]">Contact</TableHead>
                         <TableHead className="w-[8%] hidden lg:table-cell">Vehicles</TableHead>
                         <TableHead className="w-[8%] hidden lg:table-cell">Visits</TableHead>
-                        <TableHead className="w-[15%] hidden md:table-cell">Total Spent</TableHead>
-                        <TableHead className="w-[10%] hidden md:table-cell">Last Visit</TableHead>
-                        <TableHead className="w-[14%]">Actions</TableHead>
+                        <TableHead className="w-[12%] hidden md:table-cell">Total Spent</TableHead>
+                        <TableHead className="w-[8%] hidden md:table-cell">Last Visit</TableHead>
+                        <TableHead className="w-[12%]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredCustomers.map((customer) => (
+                      {filteredCustomers.map((customer, index) => {
+                        // Vehicle images based on customer type
+                        const getVehicleImage = (customerType: string) => {
+                          const vehicleImages = {
+                            government: "https://images.pexels.com/photos/9888685/pexels-photo-9888685.jpeg", // Official vehicle
+                            ngo: "https://images.pexels.com/photos/7464392/pexels-photo-7464392.jpeg", // Van for humanitarian work
+                            private: "https://images.pexels.com/photos/7464392/pexels-photo-7464392.jpeg", // Commercial van
+                            personal: "https://images.pexels.com/photos/8766145/pexels-photo-8766145.jpeg", // Personal car
+                            bodaboda: "https://images.pexels.com/photos/2116475/pexels-photo-2116475.jpeg" // Motorcycle
+                          };
+                          return vehicleImages[customerType as keyof typeof vehicleImages] || vehicleImages.personal;
+                        };
+                        const imageUrl = getVehicleImage(customer.customer_type);
+
+                        return (
                         <TableRow key={customer.id}>
+                          <TableCell className="hidden md:table-cell">
+                            <div className="w-16 h-12 rounded-lg overflow-hidden bg-gray-100">
+                              <img
+                                src={imageUrl}
+                                alt={`${customer.customer_type} vehicle`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  // Fallback to a text placeholder if image fails
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  const vehicleType = customer.customer_type === 'bodaboda' ? 'Bike' : 'Car';
+                                  target.parentElement!.innerHTML = `<div class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">${vehicleType}</div>`;
+                                }}
+                              />
+                            </div>
+                          </TableCell>
                           <TableCell>
                             <div>
                               <div className="font-medium">{customer.name}</div>
@@ -294,7 +325,8 @@ export default function CustomersPage() {
                             </div>
                           </TableCell>
                         </TableRow>
-                      ))}
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </div>

@@ -26,6 +26,7 @@ import {
   Grid3X3,
   Shield,
   Eye,
+  HelpCircle,
 } from "lucide-react"
 
 interface SidebarProps {
@@ -69,6 +70,12 @@ const getNavigationItems = (userType: string) => {
       title: "Invoices & Payments",
       href: "/invoices",
       icon: FileText,
+      roles: ["admin", "office_manager"],
+    },
+    {
+      title: "Customer Inquiries",
+      href: "/inquiries",
+      icon: HelpCircle,
       roles: ["admin", "office_manager"],
     },
   ]

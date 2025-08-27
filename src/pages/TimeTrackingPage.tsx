@@ -163,7 +163,7 @@ export default function TimeTrackingPage() {
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Time Tracking Dashboard</h1>
-                <p className="text-muted-foreground">Monitor technician productivity and work hours</p>
+                <p className="text-muted-foreground">Monitor productivity and work hours</p>
               </div>
               <div className="flex items-center gap-2">
                 <Popover>

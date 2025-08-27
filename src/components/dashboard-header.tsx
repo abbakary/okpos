@@ -23,49 +23,55 @@ const getPageContent = (pathname: string, userName: string, userType: string) =>
     case "/":
       return {
         title: `Welcome ${baseGreeting}`,
-        subtitle: "Track your business operations and customer services today.",
+        subtitle: "Track operations and customer services.",
         searchPlaceholder: "Search customers, job cards..."
       }
     case "/customers":
       return {
         title: "Customer Management",
-        subtitle: isAdmin ? "Manage all customer records and view complete customer history." : "View and update customer information for your assigned areas.",
+        subtitle: isAdmin ? "Manage customer records and history." : "View and update customer information.",
         searchPlaceholder: "Search customers, phone numbers..."
       }
     case "/orders":
       return {
         title: "Orders & Services",
-        subtitle: "Manage service orders and track their progress through completion.",
+        subtitle: "Manage orders and track progress.",
         searchPlaceholder: "Search orders, service types..."
       }
     case "/job-cards":
       return {
         title: "Job Cards & Tracking",
-        subtitle: "Monitor active job cards and track technician progress.",
+        subtitle: "Monitor job cards and technician progress.",
         searchPlaceholder: "Search job cards, vehicles..."
       }
     case "/time-tracking":
       return {
         title: "Time Tracking",
-        subtitle: "Track technician work hours and service completion times.",
+        subtitle: "Track work hours and completion times.",
         searchPlaceholder: "Search technicians, activities..."
       }
     case "/invoices":
       return {
         title: "Invoices & Payments",
-        subtitle: "Generate invoices and manage customer payment records.",
+        subtitle: "Generate invoices and manage payments.",
         searchPlaceholder: "Search invoices, customers..."
+      }
+    case "/inquiries":
+      return {
+        title: "Customer Inquiries",
+        subtitle: "Manage and respond to customer questions.",
+        searchPlaceholder: "Search inquiries, customers..."
       }
     case "/inventory":
       return {
         title: "Inventory Management",
-        subtitle: isAdmin ? "Full inventory control and stock management across all locations." : "Access restricted - Admin only feature.",
+        subtitle: isAdmin ? "Control inventory and stock management." : "Access restricted - Admin only.",
         searchPlaceholder: "Search parts, categories..."
       }
     case "/reports":
       return {
         title: "Analytics & Reports",
-        subtitle: isAdmin ? "Comprehensive business analytics and financial reports." : "View operational reports and performance metrics.",
+        subtitle: isAdmin ? "Business analytics and financial reports." : "View reports and performance metrics.",
         searchPlaceholder: "Search reports, metrics..."
       }
     default:
