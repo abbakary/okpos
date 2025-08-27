@@ -28,11 +28,12 @@ const Particle = ({ delay, duration, startX, startY }: { delay: number; duration
 const MovingTire = () => {
   return (
     <div className="relative w-full h-full overflow-hidden">
-      <div className="absolute inset-0 flex items-center">
+      <div className="absolute inset-0 flex items-center justify-start">
         <div
-          className="tire-container"
+          className="tire-container absolute"
           style={{
             animation: 'moveTire 10s linear infinite',
+            left: '-200px',
           }}
         >
           <img
@@ -109,10 +110,10 @@ export function EnhancedLoginForm() {
       <style jsx>{`
         @keyframes moveTire {
           0% {
-            transform: translateX(-200px);
+            transform: translateX(0px);
           }
           100% {
-            transform: translateX(calc(100vw + 200px));
+            transform: translateX(calc(100vw + 400px));
           }
         }
         
@@ -191,7 +192,7 @@ export function EnhancedLoginForm() {
               Welcome to
             </h1>
             <h2 className="text-3xl lg:text-5xl font-bold text-yellow-100 mb-8 drop-shadow-lg">
-              AutoCare Tanzania
+              Superdoll
             </h2>
             <p className="text-xl text-white max-w-md leading-relaxed drop-shadow-md">
               Professional car service tracking and management system
@@ -212,7 +213,7 @@ export function EnhancedLoginForm() {
                   </div>
                 </div>
                 <CardTitle className="text-3xl font-bold text-white drop-shadow-lg">
-                  AutoCare Tanzania
+                  Superdoll
                 </CardTitle>
                 <CardDescription className="text-yellow-100 text-lg">
                   Car Service Management System
