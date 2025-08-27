@@ -262,25 +262,26 @@ export default function CustomersPage() {
 
                         return (
                         <TableRow key={customer.id}>
-                          <TableCell>
-                            <div>
-                              <div className="font-medium">{customer.name}</div>
-                              <div className="text-sm text-muted-foreground">{customer.customer_code}</div>
-                            </div>
-                          </TableCell>
                           <TableCell className="hidden md:table-cell">
                             <div className="w-16 h-12 rounded-lg overflow-hidden bg-gray-100">
                               <img
                                 src={imageUrl}
-                                alt="Cargo vehicle"
+                                alt={`${customer.customer_type} vehicle`}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
                                   // Fallback to a text placeholder if image fails
                                   const target = e.target as HTMLImageElement;
                                   target.style.display = 'none';
-                                  target.parentElement!.innerHTML = '<div class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">Truck</div>';
+                                  const vehicleType = customer.customer_type === 'bodaboda' ? 'Bike' : 'Car';
+                                  target.parentElement!.innerHTML = `<div class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">${vehicleType}</div>`;
                                 }}
                               />
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div>
+                              <div className="font-medium">{customer.name}</div>
+                              <div className="text-sm text-muted-foreground">{customer.customer_code}</div>
                             </div>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
