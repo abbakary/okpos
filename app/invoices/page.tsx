@@ -449,7 +449,7 @@ export default function InvoicesPage() {
                                     </div>
                                   </div>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="hidden lg:table-cell">
                                   <Button variant="link" className="p-0 h-auto">
                                     {jobCard?.job_card_number || "N/A"}
                                   </Button>
@@ -464,15 +464,15 @@ export default function InvoicesPage() {
                                     )}
                                   </div>
                                 </TableCell>
-                                <TableCell>{formatCurrency(invoice.paid_amount)}</TableCell>
-                                <TableCell>
+                                <TableCell className="hidden md:table-cell">{formatCurrency(invoice.paid_amount)}</TableCell>
+                                <TableCell className="hidden md:table-cell">
                                   <span className={`font-medium ${
                                     invoice.balance_due > 0 ? "text-red-600" : "text-green-600"
                                   }`}>
                                     {formatCurrency(invoice.balance_due)}
                                   </span>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="hidden lg:table-cell">
                                   <div className={isOverdue(invoice.due_date, invoice.status) ? "text-red-600" : ""}>
                                     {invoice.due_date}
                                     {isOverdue(invoice.due_date, invoice.status) && (
