@@ -328,7 +328,7 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-2xl font-bold text-foreground">Order Management Dashboard</h1>
-                <p className="text-muted-foreground">Track orders from creation to completion with automatic job card generation</p>
+                <p className="text-muted-foreground">Track orders and generate job cards</p>
               </div>
             </div>
 
