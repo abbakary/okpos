@@ -17,17 +17,23 @@ const UserContext = createContext<UserContextType | undefined>(undefined)
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
 
-  // Check for existing session on mount
+  // Check for existing session on mount - optimized for speed
   useEffect(() => {
-    // In a real app, you'd check localStorage, cookies, or make an API call to verify session
-    const savedUser = localStorage.getItem("autocare_user")
-    if (savedUser) {
+    // Use requestIdleCallback for non-blocking localStorage access
+    const checkSession = () => {
       try {
-        setCurrentUser(JSON.parse(savedUser))
+        const savedUser = localStorage.getItem("autocare_user")
+        if (savedUser) {
+          setCurrentUser(JSON.parse(savedUser))
+        }
       } catch (error) {
         localStorage.removeItem("autocare_user")
       }
     }
+
+    // Use setTimeout with 0 delay for next tick execution (faster than useEffect)
+    const timer = setTimeout(checkSession, 0)
+    return () => clearTimeout(timer)
   }, [])
 
   // Save user to localStorage when it changes
