@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { AuthWrapper } from "@/components/auth-wrapper"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
 import { Button } from "@/components/ui/button"
@@ -309,7 +310,8 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <AuthWrapper>
+      <div className="flex h-screen bg-background">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <DashboardHeader />
@@ -553,6 +555,7 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
           onUpdate={handleOrderUpdate}
         />
       )}
-    </div>
+      </div>
+    </AuthWrapper>
   )
 }

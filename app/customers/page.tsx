@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { AuthWrapper } from "@/components/auth-wrapper"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
 import { Button } from "@/components/ui/button"
@@ -89,7 +90,8 @@ export default function CustomersPage() {
   }
 
   return (
-    <div className="flex h-screen bg-background">
+    <AuthWrapper>
+      <div className="flex h-screen bg-background">
       <DashboardSidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <DashboardHeader />
@@ -280,6 +282,7 @@ export default function CustomersPage() {
           }}
         />
       )}
-    </div>
+      </div>
+    </AuthWrapper>
   )
 }
