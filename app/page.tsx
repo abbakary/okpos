@@ -1,5 +1,6 @@
 "use client"
 
+import { AuthWrapper } from "@/components/auth-wrapper"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
 import { DashboardStats } from "@/components/dashboard-stats"
