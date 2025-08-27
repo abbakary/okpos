@@ -414,18 +414,18 @@ export default function InvoicesPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Invoice</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[120px]">Job Card</TableHead>
-                            <TableHead className="min-w-[120px]">Amount</TableHead>
-                            <TableHead className="min-w-[100px]">Paid</TableHead>
-                            <TableHead className="min-w-[100px]">Balance</TableHead>
-                            <TableHead className="min-w-[100px]">Due Date</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[150px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Invoice</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[12%] hidden lg:table-cell">Job Card</TableHead>
+                            <TableHead className="w-[12%]">Amount</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Paid</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Balance</TableHead>
+                            <TableHead className="w-[10%] hidden lg:table-cell">Due Date</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[16%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
