@@ -594,6 +594,15 @@ export function OrderUpdateForm({ order, onClose, onUpdate, userRole = "user" }:
           </Button>
         </DialogFooter>
       </DialogContent>
+
+      {/* Customer Attachments Modal */}
+      {showAttachments && (
+        <CustomerAttachments
+          customerId={order.customer_id}
+          customerName={`Customer ID: ${order.customer_id}`}
+          onClose={() => setShowAttachments(false)}
+        />
+      )}
     </Dialog>
   )
 }
