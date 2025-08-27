@@ -545,6 +545,7 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
       {showOrderUpdate && selectedOrder && (
         <OrderUpdateForm
           order={selectedOrder}
+          userRole="manager" // In real app, this would come from authentication context
           onClose={() => {
             setShowOrderUpdate(false)
             setSelectedOrder(null)
