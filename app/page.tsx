@@ -1,11 +1,15 @@
 "use client"
 
+import { Suspense, lazy } from "react"
 import { AuthWrapper } from "@/components/auth-wrapper"
 import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { DashboardHeader } from "@/components/dashboard-header"
 import { DashboardStats } from "@/components/dashboard-stats"
 import { DashboardActions } from "@/components/dashboard-actions"
-import { DashboardCharts } from "@/components/dashboard-charts"
+import { Skeleton } from "@/components/ui/skeleton"
+
+// Lazy load charts to improve initial load time
+const DashboardCharts = lazy(() => import("@/components/dashboard-charts").then(module => ({ default: module.DashboardCharts })))
 
 export default function DashboardPage() {
   return (
