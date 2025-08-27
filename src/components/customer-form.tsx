@@ -1,5 +1,4 @@
-"use client"
-import { MultiStepCustomerForm } from "@/components/multi-step-customer-form"
+import { MultiStepCustomerForm } from "./multi-step-customer-form"
 
 interface CustomerFormProps {
   onClose: () => void
