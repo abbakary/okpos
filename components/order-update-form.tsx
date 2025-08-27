@@ -10,7 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Clock, User, Car, FileText, CheckCircle, AlertTriangle, Save, X } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Clock, User, Car, FileText, CheckCircle, AlertTriangle, Save, X, Upload, Shield } from "lucide-react"
+import { CustomerAttachments } from "@/components/customer-attachments"
 import type { Order } from "@/lib/types"
 
 interface OrderUpdateFormProps {
