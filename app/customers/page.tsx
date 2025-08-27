@@ -186,17 +186,17 @@ export default function CustomersPage() {
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
-                  <Table className="min-w-full">
+                  <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="min-w-[180px]">Customer</TableHead>
-                        <TableHead className="min-w-[100px]">Type</TableHead>
-                        <TableHead className="min-w-[200px]">Contact</TableHead>
-                        <TableHead className="min-w-[80px]">Vehicles</TableHead>
-                        <TableHead className="min-w-[70px]">Visits</TableHead>
-                        <TableHead className="min-w-[120px]">Total Spent</TableHead>
-                        <TableHead className="min-w-[100px]">Last Visit</TableHead>
-                        <TableHead className="min-w-[100px]">Actions</TableHead>
+                        <TableHead className="w-[20%]">Customer</TableHead>
+                        <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
+                        <TableHead className="w-[25%]">Contact</TableHead>
+                        <TableHead className="w-[8%] hidden lg:table-cell">Vehicles</TableHead>
+                        <TableHead className="w-[8%] hidden lg:table-cell">Visits</TableHead>
+                        <TableHead className="w-[15%] hidden md:table-cell">Total Spent</TableHead>
+                        <TableHead className="w-[10%] hidden md:table-cell">Last Visit</TableHead>
+                        <TableHead className="w-[14%]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -208,7 +208,7 @@ export default function CustomersPage() {
                               <div className="text-sm text-muted-foreground">{customer.customer_code}</div>
                             </div>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="hidden md:table-cell">
                             <Badge
                               className={customerTypeColors[customer.customer_type as keyof typeof customerTypeColors]}
                             >
@@ -218,26 +218,26 @@ export default function CustomersPage() {
                           <TableCell>
                             <div className="space-y-1">
                               <div className="flex items-center gap-1 text-sm">
-                                <Phone className="h-3 w-3" />
-                                {customer.phone}
+                                <Phone className="h-3 w-3 flex-shrink-0" />
+                                <span className="truncate">{customer.phone}</span>
                               </div>
                               {customer.email && (
                                 <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                  <Mail className="h-3 w-3" />
-                                  {customer.email}
+                                  <Mail className="h-3 w-3 flex-shrink-0" />
+                                  <span className="truncate">{customer.email}</span>
                                 </div>
                               )}
                             </div>
                           </TableCell>
-                          <TableCell>
+                          <TableCell className="hidden lg:table-cell">
                             <div className="flex items-center gap-1">
                               <Car className="h-4 w-4 text-muted-foreground" />
                               <span className="text-sm">{customer.vehicles.length}</span>
                             </div>
                           </TableCell>
-                          <TableCell>{customer.total_visits}</TableCell>
-                          <TableCell>TSH {customer.total_spent.toLocaleString()}</TableCell>
-                          <TableCell>{customer.last_visit}</TableCell>
+                          <TableCell className="hidden lg:table-cell">{customer.total_visits}</TableCell>
+                          <TableCell className="hidden md:table-cell">TSH {customer.total_spent.toLocaleString()}</TableCell>
+                          <TableCell className="hidden md:table-cell">{customer.last_visit}</TableCell>
                           <TableCell>
                             <div className="flex gap-2">
                               <Button variant="ghost" size="sm" onClick={() => handleViewCustomer(customer)}>
