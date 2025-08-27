@@ -240,16 +240,93 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
   }
 
   const handleFinalSubmit = () => {
-    const finalData = {
-      customer: { ...customerData, vehicles },
-      serviceType,
-      serviceDetails:
-        serviceType === "tire_sales" ? tireService : serviceType === "car_service" ? carService : inquiryDetails,
-      orderId: `ORD-${Date.now()}`,
-      createdAt: new Date().toISOString(),
+    // Validate required fields
+    if (!customerData.name || !customerData.phone) {
+      alert("Please fill in required customer information (Name and Phone)")
+      return
     }
 
-    onSave(finalData)
+    if (serviceIntent === "service" && !serviceType) {
+      alert("Please select a service type")
+      return
+    }
+
+    if (serviceType === "tire_sales" && (!tireService.tire_size || !tireService.tire_brand)) {
+      alert("Please fill in tire service details")
+      return
+    }
+
+    if (serviceType === "car_service" && carService.service_types.length === 0) {
+      alert("Please select at least one service type for car service")
+      return
+    }
+
+    // Create comprehensive data structure
+    const finalData = {
+      customer: {
+        ...customerData,
+        customer_type: customerType,
+        business_info: (customerType === "government" || customerType === "ngo" || customerType === "private") ? businessInfo : null,
+        vehicles: serviceType === "car_service" ? vehicles : [],
+        id: selectedExistingCustomer?.id || `CUST-${Date.now()}`,
+        customer_code: selectedExistingCustomer?.customer_code || `CUST${String(Date.now()).slice(-6)}`,
+        registration_date: selectedExistingCustomer?.registration_date || new Date().toISOString().split('T')[0],
+        is_active: true,
+        total_visits: selectedExistingCustomer?.total_visits || 0,
+        total_spent: selectedExistingCustomer?.total_spent || 0,
+      },
+      order: serviceIntent === "service" ? {
+        id: `ORD-${Date.now()}`,
+        order_number: `ORD${String(Date.now()).slice(-6)}`,
+        order_type: serviceType === "tire_sales" ? "sales" : "service",
+        status: "created",
+        priority: serviceType === "car_service" ? carService.priority : "normal",
+        description: serviceType === "tire_sales"
+          ? `Tire Sales: ${tireService.quantity}x ${tireService.tire_brand} ${tireService.tire_size}`
+          : serviceType === "car_service"
+          ? `Car Service: ${carService.service_types.join(", ")}`
+          : "General inquiry",
+        estimated_completion: serviceType === "car_service"
+          ? new Date(Date.now() + carService.estimated_duration * 60000).toISOString()
+          : null,
+        total_amount: serviceType === "tire_sales" ? tireService.quantity * tireService.price_per_tire : 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      } : null,
+      service_details: {
+        service_intent: serviceIntent,
+        service_type: serviceType,
+        details: serviceType === "tire_sales" ? tireService
+               : serviceType === "car_service" ? carService
+               : inquiryDetails,
+      },
+      metadata: {
+        created_at: new Date().toISOString(),
+        created_by: "current_user", // This should come from user context
+        source: "multi_step_form",
+        draft_cleared: true,
+      }
+    }
+
+    try {
+      // Clear any saved draft since we're submitting
+      if (customerData.phone) {
+        const draftKey = `customer-draft-${customerData.phone}`
+        localStorage.removeItem(draftKey)
+      }
+
+      console.log("Submitting customer and order data:", finalData)
+
+      // Call the parent's onSave function
+      onSave(finalData)
+
+      // Success feedback
+      alert(`${serviceIntent === "service" ? "Order" : "Inquiry"} created successfully!`)
+
+    } catch (error) {
+      console.error("Error submitting data:", error)
+      alert("Failed to create order. Please try again.")
+    }
   }
 
   const renderStepContent = () => {
