@@ -56,6 +56,12 @@ const getPageContent = (pathname: string, userName: string, userType: string) =>
         subtitle: "Generate invoices and manage payments.",
         searchPlaceholder: "Search invoices, customers..."
       }
+    case "/inquiries":
+      return {
+        title: "Customer Inquiries",
+        subtitle: "Manage and respond to customer questions.",
+        searchPlaceholder: "Search inquiries, customers..."
+      }
     case "/inventory":
       return {
         title: "Inventory Management",
