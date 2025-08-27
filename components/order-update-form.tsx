@@ -398,16 +398,41 @@ export function OrderUpdateForm({ order, onClose, onUpdate }: OrderUpdateFormPro
             )}
 
             {/* Completion Alert */}
-            {status === "completed" && (
+            {status === "completed" && order.status !== "completed" && (
               <Card className="border-green-200 bg-green-50">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 text-green-800">
                     <CheckCircle className="h-5 w-5" />
                     <div>
-                      <h4 className="font-medium">Order Completion</h4>
+                      <h4 className="font-medium">Order Completion - Auto Generation</h4>
+                      <p className="text-sm mb-2">
+                        Completing this order will automatically generate:
+                      </p>
+                      <ul className="text-sm list-disc list-inside space-y-1">
+                        <li><strong>Job Card:</strong> JC-{new Date().getFullYear()}-XXX for work tracking</li>
+                        <li><strong>Invoice:</strong> INV-{new Date().getFullYear()}-XXX for TSH {calculateFinalAmount().toLocaleString()}</li>
+                        <li><strong>Completion Time:</strong> {new Date().toLocaleString()}</li>
+                      </ul>
+                      <p className="text-sm mt-2 font-medium">
+                        Both documents will be ready for immediate processing and customer delivery.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Status Change Alert for In Progress */}
+            {status === "in_progress" && order.status !== "in_progress" && (
+              <Card className="border-blue-200 bg-blue-50">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 text-blue-800">
+                    <Clock className="h-5 w-5" />
+                    <div>
+                      <h4 className="font-medium">Work Started</h4>
                       <p className="text-sm">
-                        Completing this order will automatically generate a job card and invoice.
-                        Completion time will be recorded as: {new Date().toLocaleString()}
+                        Changing status to "In Progress" will start time tracking for this order.
+                        Start time: {new Date().toLocaleString()}
                       </p>
                     </div>
                   </div>
