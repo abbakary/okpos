@@ -74,6 +74,8 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
     is_owner: true,
   })
 
+  const [personalSubType, setPersonalSubType] = useState<"owner" | "driver" | "">("") // For personal customer sub-type
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([
     {
       plate_number: "",
@@ -267,6 +269,8 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
         ...customerData,
         customer_type: customerType,
         business_info: (customerType === "government" || customerType === "ngo" || customerType === "private") ? businessInfo : null,
+        is_owner: customerType === "personal" ? personalSubType === "owner" : undefined,
+        personal_sub_type: customerType === "personal" ? personalSubType : undefined,
         vehicles: serviceType === "car_service" ? vehicles : [],
         id: selectedExistingCustomer?.id || `CUST-${Date.now()}`,
         customer_code: selectedExistingCustomer?.customer_code || `CUST${String(Date.now()).slice(-6)}`,
@@ -660,6 +664,25 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
                             placeholder="Enter tax number"
                           />
                         </div>
+                      </div>
+                    )}
+
+                    {/* Sub-type selection for personal customers */}
+                    {customerType === "personal" && (
+                      <div>
+                        <Label>Customer Sub-Type</Label>
+                        <Select value={personalSubType} onValueChange={setPersonalSubType}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select if you are the owner or driver" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="owner">Owner</SelectItem>
+                            <SelectItem value="driver">Driver</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {personalSubType === "owner" ? "You own the vehicle being serviced" : personalSubType === "driver" ? "You drive but don't own the vehicle" : "Please select your relationship to the vehicle"}
+                        </p>
                       </div>
                     )}
                   </CardContent>
