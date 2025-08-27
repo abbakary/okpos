@@ -174,30 +174,38 @@ export default function OrdersPage() {
 
   const generateJobCardAndInvoice = async (order: Order) => {
     try {
-      // Generate Job Card
+      const timestamp = Date.now()
+      const jobCardNumber = `JC-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${String(timestamp).slice(-3)}`
+      const invoiceNumber = `INV-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${String(timestamp + 1).slice(-3)}`
+
+      // Generate Job Card with enhanced details
       const jobCard = {
-        id: Date.now(),
-        job_card_number: `JC-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+        id: timestamp,
+        job_card_number: jobCardNumber,
         order_id: order.id,
         customer_id: order.customer_id,
         vehicle_id: order.vehicle_id,
         status: "pending",
+        priority: order.priority,
         time_in: new Date().toISOString(),
-        estimated_duration: order.order_type === "sales" ? 60 : 120,
+        estimated_duration: order.order_type === "sales" ? 60 : order.order_type === "service" ? 120 : 30,
         work_description: order.description || "",
+        customer_complaints: order.order_type === "service" ? "As per service order requirements" : "",
         assigned_technician: order.assigned_to,
         created_by: 1,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
 
-      // Generate Invoice
+      // Generate Invoice with enhanced details
       const invoice = {
-        id: Date.now() + 1,
-        invoice_number: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+        id: timestamp + 1,
+        invoice_number: invoiceNumber,
         job_card_id: jobCard.id,
+        order_id: order.id,
         customer_id: order.customer_id,
         status: "draft",
+        invoice_type: order.order_type,
         subtotal: order.total_amount,
         tax_rate: 18.0,
         tax_amount: order.tax_amount,
@@ -207,27 +215,63 @@ export default function OrdersPage() {
         balance_due: order.final_amount,
         invoice_date: new Date().toISOString().split('T')[0],
         due_date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        payment_terms: "Net 15 days",
         payment_method: null,
         payment_reference: null,
+        notes: `Generated from Order: ${order.order_number}`,
         generated_by: 1,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
 
+      // Store in localStorage for demo purposes (in real app, this would be API calls)
+      const existingJobCards = JSON.parse(localStorage.getItem('jobCards') || '[]')
+      const existingInvoices = JSON.parse(localStorage.getItem('invoices') || '[]')
+
+      localStorage.setItem('jobCards', JSON.stringify([...existingJobCards, jobCard]))
+      localStorage.setItem('invoices', JSON.stringify([...existingInvoices, invoice]))
+
       console.log("Generated Job Card:", jobCard)
       console.log("Generated Invoice:", invoice)
 
-      // Show success notification with details
-      alert(`✅ Successfully Generated:
-• Job Card: ${jobCard.job_card_number}
-• Invoice: ${invoice.invoice_number}
-• Total Amount: TSH ${order.final_amount.toLocaleString()}
+      // Enhanced success notification
+      const customerName = mockCustomers.find(c => c.id === order.customer_id)?.name || "Unknown Customer"
 
-Both items are now ready for processing.`)
+      alert(`✅ AUTOMATIC GENERATION SUCCESSFUL!
+
+📋 Job Card Generated:
+• Number: ${jobCard.job_card_number}
+• Customer: ${customerName}
+• Priority: ${order.priority.toUpperCase()}
+• Estimated Duration: ${jobCard.estimated_duration} minutes
+
+🧾 Invoice Generated:
+• Number: ${invoice.invoice_number}
+• Total Amount: TSH ${order.final_amount.toLocaleString()}
+• Due Date: ${invoice.due_date}
+• Payment Terms: Net 15 days
+
+🚀 Next Steps:
+• Job card is ready for technician assignment
+• Invoice is in draft status - ready for customer delivery
+• Both documents are now available in their respective sections
+
+The system has automatically processed your order completion!`)
+
+      // Return generated items for potential further processing
+      return { jobCard, invoice }
 
     } catch (error) {
       console.error("Error generating job card/invoice:", error)
-      alert("❌ Error generating job card and invoice. Please try again.")
+      alert(`❌ GENERATION ERROR
+
+Failed to generate job card and invoice for order ${order.order_number}.
+
+Please try again or contact system administrator if the problem persists.
+
+Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
+
+      throw error
     }
   }
 
