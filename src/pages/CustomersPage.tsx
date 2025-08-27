@@ -234,8 +234,8 @@ export default function CustomersPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-[12%] hidden md:table-cell">Vehicle</TableHead>
                         <TableHead className="w-[18%]">Customer</TableHead>
-                        <TableHead className="w-[12%] hidden md:table-cell">Vehicle Image</TableHead>
                         <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
                         <TableHead className="w-[20%]">Contact</TableHead>
                         <TableHead className="w-[8%] hidden lg:table-cell">Vehicles</TableHead>
