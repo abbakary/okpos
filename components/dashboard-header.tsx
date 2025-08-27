@@ -81,7 +81,7 @@ const getPageContent = (pathname: string, userName: string, userType: string) =>
 
 export function DashboardHeader() {
   const pathname = usePathname()
-  const { currentUser, setCurrentUser, isAdmin } = useUser()
+  const { currentUser, setCurrentUser, logout, isAdmin } = useUser()
 
   const pageContent = getPageContent(
     pathname,
