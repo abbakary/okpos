@@ -78,6 +78,7 @@ const mockInventoryItems = [
 const categories = ["All", "Tires", "Oils & Fluids", "Brake Parts", "Filters", "Batteries", "Spark Plugs"]
 
 export default function InventoryPage() {
+  const { isAdmin } = useUser()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [showAddItemDialog, setShowAddItemDialog] = useState(false)
