@@ -340,15 +340,6 @@ export function CustomerDetails({ customer, onClose }: CustomerDetailsProps) {
 
         </Tabs>
       </DialogContent>
-
-      {/* Customer Attachments Modal */}
-      {showAttachments && (
-        <CustomerAttachments
-          customerId={customer.id}
-          customerName={customer.name}
-          onClose={() => setShowAttachments(false)}
-        />
-      )}
     </Dialog>
   )
 }
