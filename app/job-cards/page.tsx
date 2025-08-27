@@ -365,18 +365,18 @@ export default function JobCardsPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Job Card</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[150px]">Vehicle</TableHead>
-                            <TableHead className="min-w-[200px]">Work Description</TableHead>
-                            <TableHead className="min-w-[150px]">Technician</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[120px]">Time</TableHead>
-                            <TableHead className="min-w-[100px]">Efficiency</TableHead>
-                            <TableHead className="min-w-[150px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Job Card</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Vehicle</TableHead>
+                            <TableHead className="w-[20%] hidden md:table-cell">Work Description</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Technician</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[12%] hidden md:table-cell">Time</TableHead>
+                            <TableHead className="w-[10%] hidden lg:table-cell">Efficiency</TableHead>
+                            <TableHead className="w-[15%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
