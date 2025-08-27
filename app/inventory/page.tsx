@@ -144,8 +144,54 @@ export default function InventoryPage() {
     })
   }
 
+  // Admin access control
+  if (!isAdmin) {
+    return (
+      <AuthWrapper>
+        <div className="flex h-screen bg-background">
+          <DashboardSidebar />
+          <div className="flex-1 flex flex-col overflow-hidden">
+            <DashboardHeader />
+            <main className="flex-1 flex items-center justify-center p-6">
+              <Card className="w-full max-w-md">
+                <CardHeader className="text-center">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+                      <Shield className="h-8 w-8 text-red-600" />
+                    </div>
+                  </div>
+                  <CardTitle className="flex items-center justify-center gap-2 text-red-600">
+                    <XCircle className="h-5 w-5" />
+                    Access Restricted
+                  </CardTitle>
+                  <CardDescription className="text-center">
+                    Inventory Management is restricted to Admin users only. This area contains sensitive business data and stock control features.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="bg-red-50 p-4 rounded-lg">
+                    <p className="text-sm text-red-800 font-medium">Admin Only Feature</p>
+                    <p className="text-xs text-red-600 mt-1">
+                      Contact your administrator if you need access to inventory functions.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </main>
+          </div>
+        </div>
+      </AuthWrapper>
+    )
+  }
+
   return (
-    <div className="flex-1 space-y-6 p-6">
+    <AuthWrapper>
+      <div className="flex h-screen bg-background">
+        <DashboardSidebar />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <DashboardHeader />
+          <main className="flex-1 overflow-y-auto p-6">
+            <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -408,6 +454,10 @@ export default function InventoryPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </AuthWrapper>
   )
 }
