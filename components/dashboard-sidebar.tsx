@@ -35,59 +35,39 @@ const navigation = [
     icon: LayoutDashboard,
   },
   {
-    title: "File Manager",
-    href: "/file-manager",
-    icon: FolderOpen,
-  },
-  {
-    title: "Kanban Board",
-    href: "/kanban",
-    icon: Grid3X3,
-  },
-  {
-    title: "Ecommerce",
-    href: "/ecommerce",
-    icon: Package,
-  },
-  {
-    title: "Letter Box",
-    href: "/letter-box",
-    icon: FileText,
-  },
-  {
-    title: "Chat",
-    href: "/chat",
-    icon: MessageSquare,
-  },
-  {
-    title: "Users",
+    title: "Customer Registration",
     href: "/customers",
     icon: Users,
   },
   {
-    title: "Bookmarks",
+    title: "Orders & Services",
     href: "/orders",
-    icon: Bookmark,
+    icon: ClipboardList,
   },
   {
-    title: "Contacts",
-    href: "/contacts",
-    icon: Phone,
-  },
-  {
-    title: "Tasks",
+    title: "Job Cards & Tracking",
     href: "/job-cards",
-    icon: CheckSquare,
+    icon: Wrench,
   },
   {
-    title: "Calendar",
-    href: "/calendar",
-    icon: Calendar,
+    title: "Time Tracking",
+    href: "/time-tracking",
+    icon: Car,
   },
   {
-    title: "Social App",
-    href: "/social",
-    icon: Share2,
+    title: "Invoices & Payments",
+    href: "/invoices",
+    icon: FileText,
+  },
+  {
+    title: "Inventory Management",
+    href: "/inventory",
+    icon: Package,
+  },
+  {
+    title: "Analytics & Reports",
+    href: "/reports",
+    icon: BarChart3,
   },
 ]
 
@@ -104,7 +84,7 @@ export function DashboardSidebar({ className }: SidebarProps) {
               <div className="w-3 h-3 bg-white rounded-full"></div>
             </div>
           </div>
-          <span className="text-xl font-bold text-white">Riho</span>
+          <span className="text-xl font-bold text-white">AutoCare</span>
         </div>
       </div>
 
