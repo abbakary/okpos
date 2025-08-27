@@ -337,6 +337,7 @@ export function CustomerDetails({ customer, onClose }: CustomerDetailsProps) {
               </CardContent>
             </Card>
           </TabsContent>
+
         </Tabs>
       </DialogContent>
     </Dialog>

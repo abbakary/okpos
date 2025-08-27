@@ -63,7 +63,7 @@ export function JobCardForm({ onClose, onSave }: JobCardFormProps) {
 
   const selectedCustomer = mockCustomers.find(c => c.id.toString() === customerId)
   const customerVehicles = mockVehicles.filter(v => v.customer_id.toString() === customerId)
-  const selectedOrder = mockOrders.find(o => o.id.toString() === selectedOrder)
+  const selectedOrderData = mockOrders.find(o => o.id.toString() === selectedOrder)
 
   const handleOrderSelect = (orderId: string) => {
     setSelectedOrder(orderId)
@@ -120,7 +120,7 @@ export function JobCardForm({ onClose, onSave }: JobCardFormProps) {
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto w-[95vw] lg:w-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5" />
@@ -195,14 +195,14 @@ export function JobCardForm({ onClose, onSave }: JobCardFormProps) {
                       </Select>
                     </div>
 
-                    {selectedOrder && (
+                    {selectedOrderData && (
                       <div className="p-3 bg-muted rounded-md">
                         <h4 className="font-medium">Selected Order</h4>
                         <p className="text-sm text-muted-foreground">
-                          Order: {selectedOrder?.order_number}
+                          Order: {selectedOrderData?.order_number}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Customer: {selectedOrder?.customer_name}
+                          Customer: {selectedOrderData?.customer_name}
                         </p>
                       </div>
                     )}

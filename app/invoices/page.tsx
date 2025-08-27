@@ -414,18 +414,18 @@ export default function InvoicesPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Invoice</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[120px]">Job Card</TableHead>
-                            <TableHead className="min-w-[120px]">Amount</TableHead>
-                            <TableHead className="min-w-[100px]">Paid</TableHead>
-                            <TableHead className="min-w-[100px]">Balance</TableHead>
-                            <TableHead className="min-w-[100px]">Due Date</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[150px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Invoice</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[12%] hidden lg:table-cell">Job Card</TableHead>
+                            <TableHead className="w-[12%]">Amount</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Paid</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Balance</TableHead>
+                            <TableHead className="w-[10%] hidden lg:table-cell">Due Date</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[16%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -449,7 +449,7 @@ export default function InvoicesPage() {
                                     </div>
                                   </div>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="hidden lg:table-cell">
                                   <Button variant="link" className="p-0 h-auto">
                                     {jobCard?.job_card_number || "N/A"}
                                   </Button>
@@ -464,15 +464,15 @@ export default function InvoicesPage() {
                                     )}
                                   </div>
                                 </TableCell>
-                                <TableCell>{formatCurrency(invoice.paid_amount)}</TableCell>
-                                <TableCell>
+                                <TableCell className="hidden md:table-cell">{formatCurrency(invoice.paid_amount)}</TableCell>
+                                <TableCell className="hidden md:table-cell">
                                   <span className={`font-medium ${
                                     invoice.balance_due > 0 ? "text-red-600" : "text-green-600"
                                   }`}>
                                     {formatCurrency(invoice.balance_due)}
                                   </span>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell className="hidden lg:table-cell">
                                   <div className={isOverdue(invoice.due_date, invoice.status) ? "text-red-600" : ""}>
                                     {invoice.due_date}
                                     {isOverdue(invoice.due_date, invoice.status) && (

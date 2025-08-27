@@ -86,6 +86,7 @@ export function CustomerAttachments({ customerId, customerName, onClose }: Custo
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
   const [selectedCategory, setSelectedCategory] = useState("other")
   const [dragActive, setDragActive] = useState(false)
+  const [viewingFile, setViewingFile] = useState<AttachmentFile | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleDrag = useCallback((e: React.DragEvent) => {
@@ -191,9 +192,7 @@ export function CustomerAttachments({ customerId, customerName, onClose }: Custo
   }
 
   const handleView = (attachment: AttachmentFile) => {
-    if (attachment.url) {
-      window.open(attachment.url, '_blank')
-    }
+    setViewingFile(attachment)
   }
 
   const handleDownload = (attachment: AttachmentFile) => {
@@ -459,6 +458,51 @@ export function CustomerAttachments({ customerId, customerName, onClose }: Custo
             </div>
           </div>
         </div>
+
+        {/* File Viewer Modal */}
+        {viewingFile && (
+          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b">
+                <h3 className="font-semibold text-lg">{viewingFile.name}</h3>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" onClick={() => handleDownload(viewingFile)}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => setViewingFile(null)}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+              <div className="p-4 h-[70vh] overflow-auto">
+                {viewingFile.type.startsWith('image/') ? (
+                  <img
+                    src={viewingFile.url}
+                    alt={viewingFile.name}
+                    className="max-w-full h-auto mx-auto"
+                  />
+                ) : viewingFile.type === 'application/pdf' ? (
+                  <iframe
+                    src={viewingFile.url}
+                    className="w-full h-full border-0"
+                    title={viewingFile.name}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-center">
+                    <File className="h-16 w-16 text-gray-400 mb-4" />
+                    <p className="text-lg font-medium mb-2">{viewingFile.name}</p>
+                    <p className="text-gray-600 mb-4">Preview not available for this file type</p>
+                    <Button onClick={() => handleDownload(viewingFile)}>
+                      <Download className="h-4 w-4 mr-2" />
+                      Download to view
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>

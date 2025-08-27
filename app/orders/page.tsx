@@ -174,30 +174,38 @@ export default function OrdersPage() {
 
   const generateJobCardAndInvoice = async (order: Order) => {
     try {
-      // Generate Job Card
+      const timestamp = Date.now()
+      const jobCardNumber = `JC-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${String(timestamp).slice(-3)}`
+      const invoiceNumber = `INV-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${String(timestamp + 1).slice(-3)}`
+
+      // Generate Job Card with enhanced details
       const jobCard = {
-        id: Date.now(),
-        job_card_number: `JC-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+        id: timestamp,
+        job_card_number: jobCardNumber,
         order_id: order.id,
         customer_id: order.customer_id,
         vehicle_id: order.vehicle_id,
         status: "pending",
+        priority: order.priority,
         time_in: new Date().toISOString(),
-        estimated_duration: order.order_type === "sales" ? 60 : 120,
+        estimated_duration: order.order_type === "sales" ? 60 : order.order_type === "service" ? 120 : 30,
         work_description: order.description || "",
+        customer_complaints: order.order_type === "service" ? "As per service order requirements" : "",
         assigned_technician: order.assigned_to,
         created_by: 1,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
 
-      // Generate Invoice
+      // Generate Invoice with enhanced details
       const invoice = {
-        id: Date.now() + 1,
-        invoice_number: `INV-${new Date().getFullYear()}-${String(Date.now()).slice(-3)}`,
+        id: timestamp + 1,
+        invoice_number: invoiceNumber,
         job_card_id: jobCard.id,
+        order_id: order.id,
         customer_id: order.customer_id,
         status: "draft",
+        invoice_type: order.order_type,
         subtotal: order.total_amount,
         tax_rate: 18.0,
         tax_amount: order.tax_amount,
@@ -207,27 +215,63 @@ export default function OrdersPage() {
         balance_due: order.final_amount,
         invoice_date: new Date().toISOString().split('T')[0],
         due_date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        payment_terms: "Net 15 days",
         payment_method: null,
         payment_reference: null,
+        notes: `Generated from Order: ${order.order_number}`,
         generated_by: 1,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       }
 
+      // Store in localStorage for demo purposes (in real app, this would be API calls)
+      const existingJobCards = JSON.parse(localStorage.getItem('jobCards') || '[]')
+      const existingInvoices = JSON.parse(localStorage.getItem('invoices') || '[]')
+
+      localStorage.setItem('jobCards', JSON.stringify([...existingJobCards, jobCard]))
+      localStorage.setItem('invoices', JSON.stringify([...existingInvoices, invoice]))
+
       console.log("Generated Job Card:", jobCard)
       console.log("Generated Invoice:", invoice)
 
-      // Show success notification with details
-      alert(`✅ Successfully Generated:
-• Job Card: ${jobCard.job_card_number}
-• Invoice: ${invoice.invoice_number}
-• Total Amount: TSH ${order.final_amount.toLocaleString()}
+      // Enhanced success notification
+      const customerName = mockCustomers.find(c => c.id === order.customer_id)?.name || "Unknown Customer"
 
-Both items are now ready for processing.`)
+      alert(`✅ AUTOMATIC GENERATION SUCCESSFUL!
+
+📋 Job Card Generated:
+• Number: ${jobCard.job_card_number}
+• Customer: ${customerName}
+• Priority: ${order.priority.toUpperCase()}
+• Estimated Duration: ${jobCard.estimated_duration} minutes
+
+🧾 Invoice Generated:
+• Number: ${invoice.invoice_number}
+• Total Amount: TSH ${order.final_amount.toLocaleString()}
+• Due Date: ${invoice.due_date}
+• Payment Terms: Net 15 days
+
+🚀 Next Steps:
+• Job card is ready for technician assignment
+• Invoice is in draft status - ready for customer delivery
+• Both documents are now available in their respective sections
+
+The system has automatically processed your order completion!`)
+
+      // Return generated items for potential further processing
+      return { jobCard, invoice }
 
     } catch (error) {
       console.error("Error generating job card/invoice:", error)
-      alert("❌ Error generating job card and invoice. Please try again.")
+      alert(`❌ GENERATION ERROR
+
+Failed to generate job card and invoice for order ${order.order_number}.
+
+Please try again or contact system administrator if the problem persists.
+
+Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
+
+      throw error
     }
   }
 
@@ -398,19 +442,19 @@ Both items are now ready for processing.`)
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Order #</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[100px]">Type</TableHead>
-                            <TableHead className="min-w-[150px]">Vehicle</TableHead>
-                            <TableHead className="min-w-[200px]">Description</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[80px]">Priority</TableHead>
-                            <TableHead className="min-w-[100px]">Time</TableHead>
-                            <TableHead className="min-w-[120px]">Amount</TableHead>
-                            <TableHead className="min-w-[100px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Order #</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Vehicle</TableHead>
+                            <TableHead className="w-[20%] hidden md:table-cell">Description</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[8%] hidden lg:table-cell">Priority</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Time</TableHead>
+                            <TableHead className="w-[12%] hidden lg:table-cell">Amount</TableHead>
+                            <TableHead className="w-[15%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -427,13 +471,13 @@ Both items are now ready for processing.`)
                               <TableCell>
                                 <div className="font-medium">{getCustomerName(order.customer_id)}</div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <Badge className={orderTypeColors[order.order_type]}>
                                   {order.order_type}
                                 </Badge>
                               </TableCell>
-                              <TableCell>{getVehicleInfo(order.vehicle_id)}</TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">{getVehicleInfo(order.vehicle_id)}</TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="max-w-xs truncate" title={order.description}>
                                   {order.description}
                                 </div>
@@ -443,25 +487,25 @@ Both items are now ready for processing.`)
                                   {order.status.replace("_", " ")}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <Badge className={priorityColors[order.priority]}>
                                   {order.priority}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">
-                                    {order.status === "in_progress" && timeTracking[order.id] 
+                                    {order.status === "in_progress" && timeTracking[order.id]
                                       ? formatDuration(timeTracking[order.id].current)
-                                      : order.status === "completed" 
+                                      : order.status === "completed"
                                         ? "Completed"
                                         : "Pending"
                                     }
                                   </span>
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <div className="text-sm">TSH {order.final_amount.toLocaleString()}</div>
                               </TableCell>
                               <TableCell>
@@ -501,6 +545,7 @@ Both items are now ready for processing.`)
       {showOrderUpdate && selectedOrder && (
         <OrderUpdateForm
           order={selectedOrder}
+          userRole="manager" // In real app, this would come from authentication context
           onClose={() => {
             setShowOrderUpdate(false)
             setSelectedOrder(null)

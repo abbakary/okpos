@@ -365,18 +365,18 @@ export default function JobCardsPage() {
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Job Card</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[150px]">Vehicle</TableHead>
-                            <TableHead className="min-w-[200px]">Work Description</TableHead>
-                            <TableHead className="min-w-[150px]">Technician</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[120px]">Time</TableHead>
-                            <TableHead className="min-w-[100px]">Efficiency</TableHead>
-                            <TableHead className="min-w-[150px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Job Card</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Vehicle</TableHead>
+                            <TableHead className="w-[20%] hidden md:table-cell">Work Description</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Technician</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[12%] hidden md:table-cell">Time</TableHead>
+                            <TableHead className="w-[10%] hidden lg:table-cell">Efficiency</TableHead>
+                            <TableHead className="w-[15%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -393,13 +393,13 @@ export default function JobCardsPage() {
                               <TableCell>
                                 <div className="font-medium">{getCustomerName(jobCard.customer_id)}</div>
                               </TableCell>
-                              <TableCell>{getVehicleInfo(jobCard.vehicle_id)}</TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">{getVehicleInfo(jobCard.vehicle_id)}</TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="max-w-xs truncate" title={jobCard.work_description}>
                                   {jobCard.work_description}
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 <div className="flex items-center gap-1">
                                   <User className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">{getTechnicianName(jobCard.assigned_technician)}</span>
@@ -410,25 +410,25 @@ export default function JobCardsPage() {
                                   {jobCard.status.replace("_", " ")}
                                 </Badge>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden md:table-cell">
                                 <div className="flex items-center gap-1">
                                   <Clock className="h-4 w-4 text-muted-foreground" />
                                   <span className="text-sm">
-                                    {jobCard.status === "in_progress" && timeTracking[jobCard.id] 
+                                    {jobCard.status === "in_progress" && timeTracking[jobCard.id]
                                       ? formatDuration(timeTracking[jobCard.id].current)
-                                      : jobCard.actual_duration 
+                                      : jobCard.actual_duration
                                         ? formatDuration(jobCard.actual_duration)
                                         : formatDuration(jobCard.estimated_duration || 0)
                                     }
                                   </span>
                                 </div>
                               </TableCell>
-                              <TableCell>
+                              <TableCell className="hidden lg:table-cell">
                                 {jobCard.estimated_duration && jobCard.actual_duration && (
                                   <div className="flex items-center gap-1">
                                     <span className={`text-sm font-medium ${
-                                      calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 90 
-                                        ? "text-green-600" 
+                                      calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 90
+                                        ? "text-green-600"
                                         : calculateEfficiency(jobCard.estimated_duration, jobCard.actual_duration) >= 70
                                           ? "text-yellow-600"
                                           : "text-red-600"

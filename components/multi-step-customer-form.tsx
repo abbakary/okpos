@@ -916,7 +916,7 @@ export function MultiStepCustomerForm({ onClose, onSave, customer }: MultiStepCu
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-[95vw] max-h-[98vh] overflow-y-auto w-[95vw] min-h-[90vh]">
+      <DialogContent className="max-w-6xl max-h-[95vh] overflow-y-auto w-[95vw] lg:w-auto">
         <DialogHeader>
           <DialogTitle>Customer Registration & Order Creation</DialogTitle>
           <DialogDescription>Complete customer registration and service order in organized steps</DialogDescription>
