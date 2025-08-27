@@ -246,12 +246,36 @@ export default function CustomersPage() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {filteredCustomers.map((customer) => (
+                      {filteredCustomers.map((customer, index) => {
+                        // Array of cargo vehicle images to rotate through
+                        const vehicleImages = [
+                          "https://images.pexels.com/photos/18468424/pexels-photo-18468424.jpeg",
+                          "https://images.pexels.com/photos/6169056/pexels-photo-6169056.jpeg",
+                          "https://images.pexels.com/photos/7006131/pexels-photo-7006131.jpeg"
+                        ];
+                        const imageUrl = vehicleImages[index % vehicleImages.length];
+
+                        return (
                         <TableRow key={customer.id}>
                           <TableCell>
                             <div>
                               <div className="font-medium">{customer.name}</div>
                               <div className="text-sm text-muted-foreground">{customer.customer_code}</div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="hidden md:table-cell">
+                            <div className="w-16 h-12 rounded-lg overflow-hidden bg-gray-100">
+                              <img
+                                src={imageUrl}
+                                alt="Cargo vehicle"
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  // Fallback to a text placeholder if image fails
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  target.parentElement!.innerHTML = '<div class="w-full h-full bg-gray-200 flex items-center justify-center text-xs text-gray-500">Truck</div>';
+                                }}
+                              />
                             </div>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
@@ -295,7 +319,8 @@ export default function CustomersPage() {
                             </div>
                           </TableCell>
                         </TableRow>
-                      ))}
+                        );
+                      })}
                     </TableBody>
                   </Table>
                 </div>
