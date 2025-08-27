@@ -442,19 +442,19 @@ Error details: ${error instanceof Error ? error.message : 'Unknown error'}`)
                   </CardHeader>
                   <CardContent>
                     <div className="overflow-x-auto">
-                      <Table className="min-w-full">
+                      <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="min-w-[120px]">Order #</TableHead>
-                            <TableHead className="min-w-[180px]">Customer</TableHead>
-                            <TableHead className="min-w-[100px]">Type</TableHead>
-                            <TableHead className="min-w-[150px]">Vehicle</TableHead>
-                            <TableHead className="min-w-[200px]">Description</TableHead>
-                            <TableHead className="min-w-[100px]">Status</TableHead>
-                            <TableHead className="min-w-[80px]">Priority</TableHead>
-                            <TableHead className="min-w-[100px]">Time</TableHead>
-                            <TableHead className="min-w-[120px]">Amount</TableHead>
-                            <TableHead className="min-w-[100px]">Actions</TableHead>
+                            <TableHead className="w-[12%]">Order #</TableHead>
+                            <TableHead className="w-[18%]">Customer</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Type</TableHead>
+                            <TableHead className="w-[15%] hidden lg:table-cell">Vehicle</TableHead>
+                            <TableHead className="w-[20%] hidden md:table-cell">Description</TableHead>
+                            <TableHead className="w-[10%]">Status</TableHead>
+                            <TableHead className="w-[8%] hidden lg:table-cell">Priority</TableHead>
+                            <TableHead className="w-[10%] hidden md:table-cell">Time</TableHead>
+                            <TableHead className="w-[12%] hidden lg:table-cell">Amount</TableHead>
+                            <TableHead className="w-[15%]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
