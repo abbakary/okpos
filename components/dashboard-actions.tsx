@@ -1,8 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Plus, Search, FileText, Clock } from "lucide-react"
+import { Plus, Search, FileText, Clock, Shield, Eye, Package, BarChart3, Users } from "lucide-react"
 import Link from "next/link"
+import { useUser } from "@/lib/user-context"
 
 export function DashboardActions() {
   return (
