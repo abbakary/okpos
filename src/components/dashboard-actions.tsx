@@ -1,9 +1,7 @@
-"use client"
-
-import { Button } from "@/components/ui/button"
+import { Button } from "./ui/button"
 import { Plus, Search, FileText, Clock, Shield, Eye, Package, BarChart3, Users } from "lucide-react"
-import Link from "next/link"
-import { useUser } from "@/lib/user-context"
+import { Link } from "react-router-dom"
+import { useUser } from "../lib/user-context"
 
 export function DashboardActions() {
   const { isAdmin } = useUser()
