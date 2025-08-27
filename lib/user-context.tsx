@@ -41,14 +41,21 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   const isAdmin = currentUser?.user_type === "admin"
   const isManager = currentUser?.user_type === "office_manager"
+  const isAuthenticated = !!currentUser
+
+  const logout = () => {
+    setCurrentUser(null)
+  }
 
   return (
     <UserContext.Provider
       value={{
         currentUser,
         setCurrentUser,
+        logout,
         isAdmin,
         isManager,
+        isAuthenticated,
       }}
     >
       {children}
